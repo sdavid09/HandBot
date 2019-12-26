@@ -1,5 +1,5 @@
 *.db
 node_modules/*
 *.code-workspace
-config.json
+token.json
 

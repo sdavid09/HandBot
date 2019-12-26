@@ -5,25 +5,28 @@
 
   Description: Bot to add moderation and add xp, currency, to discord
 */
-const { UserCommands, UserInfo} = require ('./db');
-const Discord = require('discord.js');
 
-const { prefix, token } = require('./config.json');
+// Configs and Dependencies
+const Discord = require('discord.js');
+const { token } = require('./conf/token.json');
+const { prefix, server_id } = require('./conf/config.json');
+const { UserCommands, UserInfo} = require ('./db');
+
+
 const client = new Discord.Client();
 var servers = client.guilds; // get all servers
 var db_user = new UserCommands();
 var db_info = new UserInfo();
 client.once('ready', () => {
     console.log('Ready!');
-    server_id = "578044091292712960"
-    var server = getServerInfo(server_id); // CORDES_GONE_WILD : 512092064729792512  Test_SERVER: 578044091292712960
+    var server = getServerInfo(server_id); 
     let users = server.members;
     user_list = users.keyArray()
     setupUsersTable(users, user_list, server_id); 
 });
 
 client.on('message', async message => {
-    //getUsers();
+
     // console.log(message.author.username);
     // console.log(message.author.id);
     
