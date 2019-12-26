@@ -5,34 +5,38 @@
 
   Description: Bot to add moderation and add xp, currency, to discord
 */
-const { DB } = require ('./db');
+const { UserCommands, UserInfo} = require ('./db');
 const Discord = require('discord.js');
 
-const { prefix,token } = require('./config.json');
+const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 var servers = client.guilds; // get all servers
-var db = new DB();
+var db_user = new UserCommands();
+var db_info = new UserInfo();
 client.once('ready', () => {
     console.log('Ready!');
-    db.setupInitialTables();
-    server_id = "512092064729792512"
+    server_id = "578044091292712960"
     var server = getServerInfo(server_id); // CORDES_GONE_WILD : 512092064729792512  Test_SERVER: 578044091292712960
     let users = server.members;
     user_list = users.keyArray()
     setupUsersTable(users, user_list, server_id); 
-	//getUsers();  
-	
 });
 
-client.on('message', message => {
+client.on('message', async message => {
     //getUsers();
     // console.log(message.author.username);
     // console.log(message.author.id);
-    db.addXP(message.author.id);
-    if (message.content.startsWith('!xp'))
-    {
-      var xp = db.getXP(message.author.id)
-      console.log(xp);
+    
+    if (message.content.startsWith('!xp')){
+        //console.log(message.channel.name);
+        let xp = db_user.getXP(message.author.id, message)
+        xp.then(rows=>{
+          message.channel.send(`User: ${message.author.username}  XP: ${rows.xp}`);
+        })
+
+    }
+    else {
+      db_user.addXP(message.author.id);
     }
    
     // let msg = member.user.lastMessage.createdTimestamp;
@@ -58,7 +62,7 @@ function setupUsersTable(users, user_list, server) {
       let member = users.get(i)
       let username = member.user.username ;
       let user_id = member.user.id;
-      db.insertUser(user_id, username, server);
+      db_info.insertUser(user_id, username, server);
     }
     /* loop through user list */
    
