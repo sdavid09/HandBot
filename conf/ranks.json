@@ -1,0 +1,72 @@
+{ 
+    "King" : {
+        "rank" : 1, 
+        "base_xp" : 1000000, 
+        "description" : "Kings",
+        "bonus" : 25000,
+        "approval" : "yes"
+    },
+    "Lord" : {
+        "rank" : 2, 
+        "base_xp" : 500000, 
+        "description" : "Lords",
+        "bonus" : 10000,
+        "approval" : "yes"
+    },
+    "Knight" : {
+        "rank" : 3, 
+        "base_xp" : 250000, 
+        "description" : "Knights",
+        "bonus" : 5000,
+        "approval" : "yes"
+    },
+    "Noble" : {
+        "rank" : 4, 
+        "base_xp" : 175000, 
+        "description" : "Nobles",
+        "bonus" : 2000,
+        "approval" : "no"
+    },
+    "Scholar" : {
+        "rank" : 5, 
+        "base_xp" : 100000, 
+        "description" : "Scholar",
+        "bonus" : 1000,
+        "approval" : "no"
+    },
+    "Bard" : {
+        "rank" : 6, 
+        "base_xp" : 50000, 
+        "description" : "Bard",
+        "bonus" : 400,
+        "approval" : "no"
+    },
+    "Artisan" : {
+        "rank" : 7, 
+        "base_xp" : 25000, 
+        "description" : "Artisan",
+        "bonus" : 225,
+        "approval" : "no"
+    },
+    "Mercenary" : {
+        "rank" : 8, 
+        "base_xp" : 13000, 
+        "description" : "Mercenary",
+        "bonus" : 100,
+        "approval" : "no"
+    },
+    "Merchant" : {
+        "rank" : 9, 
+        "base_xp" : 5000, 
+        "description" : "Merchant",
+        "bonus" : 50,
+        "approval" : "no"
+    },
+    "Peasant" : {
+        "rank" : 10, 
+        "base_xp" : 0, 
+        "description" : "Peasant",
+        "bonus" : 25,
+        "approval" : "no"
+    }
+}
