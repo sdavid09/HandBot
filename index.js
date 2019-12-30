@@ -24,10 +24,10 @@ var db_info = new UserInfo();
 /* On Bot Startup */
 client.once('ready', () => {
     console.log('The HandBot is ready to serve the kingdom!');
-    let keys = Object.keys(ranks);
-    for ( let i in keys) {
-      console.log(keys[i]);
-    }
+    // let keys = Object.keys(ranks);
+    // for ( let i in keys) {
+    //   console.log(keys[i]);
+    // }
     var server = getServerInfo(server_id); 
     let users = server.members;
     user_list = users.keyArray()
@@ -63,6 +63,28 @@ client.on('message', async message => {
         .catch ( error => {
           console.log(error);
         })
+    }
+    // Display User Rank
+    else if (message.content.startsWith('!stats')){
+      db_user.getAllStats(message.author.id)
+      .then(rows=>{
+        const exampleEmbed = new Discord.RichEmbed()
+        .setColor('#ff8400')
+        .setTitle(message.author.username)
+        .setDescription(`Rank : ${rows.rank}`)
+        .setThumbnail('https://cdn0.iconfinder.com/data/icons/rank-badge/64/rank_badge-13-512.png')
+        .addField('Regular field title', 'Some value here')
+        .addBlankField()
+        .addField('Level', `${rows.level}`, true)
+        .addField('Xp',  `${rows.xp}`, true)
+        .addField('Money', `${rows.money}`, true)
+        .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
+        .setTimestamp()
+        message.channel.send(exampleEmbed);
+      })
+      .catch ( error=> {
+        console.log(error);
+      })
     }
     else {
       db_user.addXP(message_xp, message.author.id);

@@ -33,9 +33,12 @@ class UserCommands extends DB{
 	}
 
 	getXP(id) {
-		let xp = 0;
 		let search_for_user_xp = super.get(`Select xp FROM users WHERE id = ?`,[id] );
 		return search_for_user_xp;		 		
+	}
+	getAllStats(id) {
+		let all_stats = super.get(`Select money, xp, rank, level FROM users WHERE id = ?`,[id] );
+		return all_stats;		 		
 	}
 
 }
