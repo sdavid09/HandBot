@@ -10,9 +10,8 @@
 const Discord = require('discord.js');
 const { token, giphy_token } = require('./conf/token.json');
 const { prefix, server_id, max_lvl, message_xp } = require('./conf/config.json');
-let ranks = require('./conf/ranks.json');
-const { UserCommands, UserInfo} = require ('./db');
-
+const { UserCommands, UserInfo } = require ('./src/db');
+const { Rank } = require ('./src/rank');
 const GiphyClient  = require('giphy-js-sdk-core')
 var giphy = GiphyClient(giphy_token)
 
@@ -20,14 +19,12 @@ const client = new Discord.Client();
 var servers = client.guilds; // get all servers
 var db_user = new UserCommands();
 var db_info = new UserInfo();
+let ranks = new Rank();
 
 /* On Bot Startup */
 client.once('ready', () => {
     console.log('The HandBot is ready to serve the kingdom!');
-    // let keys = Object.keys(ranks);
-    // for ( let i in keys) {
-    //   console.log(keys[i]);
-    // }
+    ranks.getAllRanks();
     var server = getServerInfo(server_id); 
     let users = server.members;
     user_list = users.keyArray()
@@ -71,13 +68,12 @@ client.on('message', async message => {
         const exampleEmbed = new Discord.RichEmbed()
         .setColor('#ff8400')
         .setTitle(message.author.username)
-        .setDescription(`Rank : ${rows.rank}`)
+        .setDescription(`${rows.rank}`)
         .setThumbnail('https://cdn0.iconfinder.com/data/icons/rank-badge/64/rank_badge-13-512.png')
-        .addField('Regular field title', 'Some value here')
         .addBlankField()
-        .addField('Level', `${rows.level}`, true)
-        .addField('Xp',  `${rows.xp}`, true)
-        .addField('Money', `${rows.money}`, true)
+        .addField('**Level**', `_${rows.level}_`, true)
+        .addField('**Xp**',  `_${rows.xp}_`, true)
+        .addField('**Money**', `_${rows.money}_`, true)
         .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
         .setTimestamp()
         message.channel.send(exampleEmbed);
