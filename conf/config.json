@@ -1,5 +1,6 @@
 {
     "prefix": "!",
     "server_id": "578044091292712960",
-    "max_lvl" : 100 
+    "max_lvl" : 100,
+    "message_xp": 50
 }

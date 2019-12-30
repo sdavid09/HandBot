@@ -9,7 +9,7 @@
 // Configs and Dependencies
 const Discord = require('discord.js');
 const { token, giphy_token } = require('./conf/token.json');
-const { prefix, server_id, max_lvl } = require('./conf/config.json');
+const { prefix, server_id, max_lvl, message_xp } = require('./conf/config.json');
 let ranks = require('./conf/ranks.json');
 const { UserCommands, UserInfo} = require ('./db');
 
@@ -40,23 +40,25 @@ client.on('message', async message => {
     // console.log(message.author.id);
     
     if (message.content.startsWith('!xp')){
-        //console.log(message.channel.name);
-        let xp = db_user.getXP(message.author.id, message)
-        xp.then(rows=>{
+        db_user.getXP(message.author.id, message)
+        .then(rows=>{
           message.channel.send(`User: ${message.author.username}  XP: ${rows.xp}`);
-         
         })
-        let giphy_url = giphyMessage("level up")
-        giphy_url.then(stuff=>{
-          console.log(`STUFFEEE ${stuff.url}`);
+        .catch ( error => {
+          console.log(error);
         })
-        console.log(giphy_url)
-        // message.channel.send("", { files: [`${giphy_url}`] })
-
     }
     else {
-      db_user.addXP(message.author.id);
+      db_user.addXP(message_xp, message.author.id);
     }
+    // New Rank
+    // giphyMessage("promoted" ,'pg-13')
+    // .then(url=>{
+    //   message.channel.send("", { files: [`${url}`] })
+    // })
+    // .catch ( error => {
+    //   console.log(error);
+    // })
    
     // let msg = member.user.lastMessage.createdTimestamp;
     // let joined = member.joinedAt;
@@ -71,21 +73,15 @@ client.on('message', async message => {
     
       });
 
-function giphyMessage(query) {
- giphy.search('gifs', { "q": `${query}`, "rating" : "pg-13", "limit" : 100 }).then((response) => {
-    let totalResponses = response.data.length;
-    var responseIndex = Math.floor((Math.random() * 100) + 1) % totalResponses;
-    var finalResponse = response.data[responseIndex];
-
-    url = finalResponse.images.fixed_height.url
-    // console.log(url);
-    }).catch(() => {
-      console.log("Error Finding Gif");
-  })
-
-
-  console.log(`This is a test: ${test}`)
-
+function giphyMessage(query, rating) {
+    return new Promise ( (resolve, reject ) => {
+        giphy.search('gifs', { "q": `${query}`, "rating" : `${rating}`, "limit" : 100 }).then((response) => {
+        let random_selection_index = Math.floor((Math.random() * response.data.length ) + 1)
+        resolve( response.data[random_selection_index].images.fixed_height.url); 
+        }).catch(() => {
+          reject("Error Finding Gif");
+      })
+    })
 }
 
 // function setupRanks(ranks, max_lvl) {

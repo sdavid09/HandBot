@@ -28,8 +28,8 @@ class DB {
 }
 class UserCommands extends DB{
 
-	addXP(id) {
-		super.run(`UPDATE users SET xp=xp + 5 WHERE id = ?`,[id]);
+	addXP(xp, id) {
+		super.run(`UPDATE users SET xp=xp + ? WHERE id = ?`,[xp, id]);
 	}
 
 	getXP(id) {
@@ -62,10 +62,9 @@ class UserInfo extends DB{
 	}
 
 	insertUser(id, name, server) {
-				// create record of users 
+		// create record of users 
 		super.run(`INSERT OR IGNORE INTO users (id, name, server) VALUES (?,?,?)`, [id, name, server]);
 	}
-
 }
 
 module.exports = {

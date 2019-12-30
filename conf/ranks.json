@@ -2,7 +2,7 @@
     "King" : {
         "rank" : 1, 
         "base_xp" : 1000000, 
-        "description" : "Kings",
+        "description" : "King",
         "bonus" : 25000,
         "approval" : "yes"
     },
