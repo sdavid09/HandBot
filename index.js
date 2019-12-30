@@ -21,24 +21,40 @@ var servers = client.guilds; // get all servers
 var db_user = new UserCommands();
 var db_info = new UserInfo();
 
+/* On Bot Startup */
 client.once('ready', () => {
-    console.log('Ready!');
+    console.log('The HandBot is ready to serve the kingdom!');
     let keys = Object.keys(ranks);
     for ( let i in keys) {
       console.log(keys[i]);
     }
-    console.log(keys);
     var server = getServerInfo(server_id); 
     let users = server.members;
     user_list = users.keyArray()
     setupUsersTable(users, user_list, server_id); 
 });
 
-client.on('message', async message => {
+/* When User Joins The Server*/
+client.on('guildMemberAdd', member => {
+  // Send the message to a designated channel on a server:
+  const channel = member.guild.channels.find(ch => ch.name === 'general');
+  // Do nothing if the channel wasn't found on this server
+  if (!channel) return;
+  // Send the message, mentioning the member
+  channel.send(`Welcome to the Server, ${member}!`);
+  giphyMessage("welcome" ,'pg-13')
+  .then(url=>{
+    channel.send("", { files: [`${url}`] })
+  })
+  .catch ( error => {
+    console.log(error);
+  })
+  // Add user to Database
+  db_info.insertUser(member.id, member.user.username, server_id);
+});
 
-    // console.log(message.author.username);
-    // console.log(message.author.id);
-    
+/* When User Messages on server*/
+client.on('message', async message => {
     if (message.content.startsWith('!xp')){
         db_user.getXP(message.author.id, message)
         .then(rows=>{
@@ -51,6 +67,9 @@ client.on('message', async message => {
     else {
       db_user.addXP(message_xp, message.author.id);
     }
+});
+
+/* User Ranks Up*/
     // New Rank
     // giphyMessage("promoted" ,'pg-13')
     // .then(url=>{
@@ -59,20 +78,9 @@ client.on('message', async message => {
     // .catch ( error => {
     //   console.log(error);
     // })
-   
-    // let msg = member.user.lastMessage.createdTimestamp;
-    // let joined = member.joinedAt;
-    // let joi = member.joinedTimestamp;
-    // console.log(member.presence);
-    // console.log(joined);
-    
-    let now = Date.now()
 
-    // console.log(Date(msg));
-	  // console.log(now);
-    
-      });
 
+/* Helper Functions*/
 function giphyMessage(query, rating) {
     return new Promise ( (resolve, reject ) => {
         giphy.search('gifs', { "q": `${query}`, "rating" : `${rating}`, "limit" : 100 }).then((response) => {
@@ -96,7 +104,6 @@ function setupUsersTable(users, user_list, server) {
       db_info.insertUser(user_id, username, server);
     }
   };
-
 
 function getServerInfo(server_id){
   return servers.get(server_id);
