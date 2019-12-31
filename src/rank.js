@@ -5,6 +5,10 @@ class Rank {
         this.ranks = ranks;
     }
 
+    // createRanksOnServer() {
+
+    // }
+
     getAllRanks() {
         let keys = Object.keys(ranks);
         for ( let i in keys) {

@@ -10,21 +10,17 @@
 const Discord = require('discord.js');
 const { token, giphy_token } = require('./conf/token.json');
 const { prefix, server_id, max_lvl, message_xp } = require('./conf/config.json');
-const { UserCommands, UserInfo } = require ('./src/db');
-const { Rank } = require ('./src/rank');
+const { User } = require ('./src/user');
 const GiphyClient  = require('giphy-js-sdk-core')
 var giphy = GiphyClient(giphy_token)
 
 const client = new Discord.Client();
+let user = new User();
 var servers = client.guilds; // get all servers
-var db_user = new UserCommands();
-var db_info = new UserInfo();
-let ranks = new Rank();
 
 /* On Bot Startup */
 client.once('ready', () => {
     console.log('The HandBot is ready to serve the kingdom!');
-    ranks.getAllRanks();
     var server = getServerInfo(server_id); 
     let users = server.members;
     user_list = users.keyArray()
@@ -47,43 +43,33 @@ client.on('guildMemberAdd', member => {
     console.log(error);
   })
   // Add user to Database
-  db_info.insertUser(member.id, member.user.username, server_id);
+  user.addUserToDB(member.id, member.user.username, server_id);
 });
 
 /* When User Messages on server*/
 client.on('message', async message => {
     if (message.content.startsWith('!xp')){
-        db_user.getXP(message.author.id, message)
-        .then(rows=>{
-          message.channel.send(`User: ${message.author.username}  XP: ${rows.xp}`);
-        })
-        .catch ( error => {
-          console.log(error);
-        })
+        let xp = await user.getXP(message.author.id);
+        message.channel.send(`User: ${message.author.username}  XP: ${xp.xp}`);
     }
     // Display User Rank
     else if (message.content.startsWith('!stats')){
-      db_user.getAllStats(message.author.id)
-      .then(rows=>{
-        const exampleEmbed = new Discord.RichEmbed()
-        .setColor('#ff8400')
-        .setTitle(message.author.username)
-        .setDescription(`${rows.rank}`)
-        .setThumbnail('https://cdn0.iconfinder.com/data/icons/rank-badge/64/rank_badge-13-512.png')
-        .addBlankField()
-        .addField('**Level**', `_${rows.level}_`, true)
-        .addField('**Xp**',  `_${rows.xp}_`, true)
-        .addField('**Money**', `_${rows.money}_`, true)
-        .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
-        .setTimestamp()
-        message.channel.send(exampleEmbed);
-      })
-      .catch ( error=> {
-        console.log(error);
-      })
+      let user_stats = await user.getAllUserStats(message.author.id)
+      const exampleEmbed = new Discord.RichEmbed()
+      .setColor('#ff8400')
+      .setTitle(message.author.username)
+      .setDescription(`${user_stats.rank}`)
+      .setThumbnail('https://cdn0.iconfinder.com/data/icons/rank-badge/64/rank_badge-13-512.png')
+      .addBlankField()
+      .addField('**Level**', `_${user_stats.level}_`, true)
+      .addField('**Xp**',  `_${user_stats.xp}_`, true)
+      .addField('**Money**', `_${user_stats.money}_`, true)
+      .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
+      .setTimestamp()
+      message.channel.send(exampleEmbed);
     }
     else {
-      db_user.addXP(message_xp, message.author.id);
+      user.addXP(message_xp, message.author.id);
     }
 });
 
@@ -110,16 +96,12 @@ function giphyMessage(query, rating) {
     })
 }
 
-// function setupRanks(ranks, max_lvl) {
-
-// }
-
 function setupUsersTable(users, user_list, server) {
     for( let i of user_list ){
       let member = users.get(i)
       let username = member.user.username ;
       let user_id = member.user.id;
-      db_info.insertUser(user_id, username, server);
+      user.addUserToDB(user_id, username, server);
     }
   };
 

@@ -71,5 +71,5 @@ class UserInfo extends DB{
 }
 
 module.exports = {
-	UserCommands, UserInfo
+	DB, UserCommands, UserInfo
 };
