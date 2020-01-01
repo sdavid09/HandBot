@@ -3,7 +3,8 @@ let db = new DB();
 
 class Level {
     constructor() {
-        this.xp= 0;
+        this.xp = 0;
+        this.level = 0;
     }
 
     getXP(id) {
@@ -12,9 +13,11 @@ class Level {
     }
     
     addXP(xp, id) {
-        
         db.run(`UPDATE users SET xp=xp + ? WHERE id = ?`,[xp, id]);
-        
+    }
+
+    levelUp(id) {
+        // increase level
     }
 }
 

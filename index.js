@@ -55,7 +55,7 @@ client.on('message', async message => {
     // Display User Rank
     else if (message.content.startsWith('!stats')){
       let user_stats = await user.getAllUserStats(message.author.id)
-      const exampleEmbed = new Discord.RichEmbed()
+      const statsEmbedMessage = new Discord.RichEmbed()
       .setColor('#ff8400')
       .setTitle(message.author.username)
       .setDescription(`${user_stats.rank}`)
@@ -66,7 +66,7 @@ client.on('message', async message => {
       .addField('**Money**', `_${user_stats.money}_`, true)
       .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
       .setTimestamp()
-      message.channel.send(exampleEmbed);
+      message.channel.send(statsEmbedMessage);
     }
     else {
       user.addXP(message_xp, message.author.id);
