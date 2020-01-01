@@ -2,13 +2,12 @@
 const { Rank } = require ('./rank');
 const { Level } = require ('./level');
 const { Money } = require ('./money');
-const { Stats } = require ('./stats');
 const { DB } = require('./db');
 let db = new DB();
 
 class User {
     constructor() {
-        this.id = 0;
+        this.id;
         this.level;
         this.xp;
         this.rank;
@@ -16,8 +15,8 @@ class User {
     }
 
     async getAllUserStats(id) {
-        let stats = new Stats();
-        return await stats.getAllUserStats(id);
+        let all_stats = await db.get(`Select money, xp, rank, level FROM users WHERE id = ?`,[id] );
+        return all_stats;
     }
 
     async getXP(id) {
@@ -35,14 +34,6 @@ class User {
 	    db.run(`INSERT OR IGNORE INTO users (id, name, server) VALUES (?,?,?)`, [id, name, server]);
     }
     
-    checkForRankPromotion(id) {
-        // checks current xp with ranks if can promote
-        // returns true if can promote
-    }
-
-    promoteUser(id) {
-        // change user rank to higher
-    }
 }
 
 module.exports = {
