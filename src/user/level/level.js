@@ -3,8 +3,23 @@ let db = new DB();
 
 class Level {
     constructor() {
-        this.xp = 0;
         this.level = 0;
+    }
+
+    getLevel(id) {
+        // return user level
+    }
+
+    levelUp(id) {
+        // increase level
+    }
+
+
+}
+
+class XP {
+    constructor () {
+        this.xp;
     }
 
     getXP(id) {
@@ -15,12 +30,14 @@ class Level {
     addXP(xp, id) {
         db.run(`UPDATE users SET xp=xp + ? WHERE id = ?`,[xp, id]);
     }
-
-    levelUp(id) {
-        // increase level
-    }
+    
+    voiceXPModifier(number_of_users) {
+    // increase 1% xp modifier per user in same channel
+    let xp = voice_xp * ( 1 + ( number_of_users / 100 ))
+    return xp;
+  }
 }
 
 module.exports = {
-	Level
+	Level, XP
 };

@@ -1,6 +1,6 @@
 
 const { Rank } = require ('../rank/rank');
-const { Level } = require ('../level/level');
+const { Level, XP } = require ('../level/level');
 const { Money } = require ('../economy/money');
 const { DB } = require('../../db/db');
 let db = new DB();
@@ -20,20 +20,21 @@ class User {
     }
 
     async getXP(id) {
-        let level = new Level();
-        return await level.getXP(id);
+        let xp = new XP();
+        return await xp.getXP(id);
     }
 
-    addXP(xp, id) {
-        let level = new Level();
-        level.addXP(xp, id);
+    addXP(value, id) {
+        let xp = new XP();
+        xp.addXP(value, id);
     }
 
     addUserToDB(id, name, server) {
 		// create record of users 
 	    db.run(`INSERT OR IGNORE INTO users (id, name, server) VALUES (?,?,?)`, [id, name, server]);
     }
-    
+
+
 }
 
 module.exports = {

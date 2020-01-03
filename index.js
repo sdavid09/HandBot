@@ -8,11 +8,10 @@
 
 // Configs and Dependencies
 const Discord = require('discord.js');
-const { token, giphy_token } = require('./conf/token.json');
+const { token } = require('./conf/token.json');
 const { prefix, server_id, max_lvl, message_xp, voice_xp } = require('./conf/config.json');
 const { User } = require ('./src/user/base/user');
-const GiphyClient  = require('giphy-js-sdk-core')
-var giphy = GiphyClient(giphy_token)
+const gifMessage = require ('./src/extra/giphy');
 
 const client = new Discord.Client();
 let user = new User();
@@ -21,7 +20,6 @@ var servers = client.guilds; // get all servers
 /* On Bot Startup */
 client.once('ready', () => {
     console.log('The HandBot is ready to serve the kingdom!');
-    // console.log(client.channels);
     var server = getServerInfo(server_id); 
     // const channels = server.channels.filter(ch => ch.type === 'voice');
     // getVoiceChannels(channels.array());
@@ -38,7 +36,7 @@ client.on('guildMemberAdd', member => {
   if (!channel) return;
   // Send the message, mentioning the member
   channel.send(`Welcome to the Server, ${member}!`);
-  giphyMessage("welcome" ,'pg-13')
+  gifMessage("welcome" ,'pg-13')
   .then(url=>{
     channel.send("", { files: [`${url}`] })
   })
@@ -86,38 +84,15 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
      // User Joins a voice channel
      let users_in_channel = newUserChannel.members.keyArray().length;
-     let xp = voiceXPModifier(users_in_channel);
-     user.addXP(xp, newMember.id)
+     user.addXP(100, newMember.id)
 
   } else if(newUserChannel === undefined){
 
     // User leaves a voice channel
-    console.log("Somoeone left a voice channel");
   }
 })
 
-/* User Ranks Up*/
-    // New Rank
-    // giphyMessage("promoted" ,'pg-13')
-    // .then(url=>{
-    //   message.channel.send("", { files: [`${url}`] })
-    // })
-    // .catch ( error => {
-    //   console.log(error);
-    // })
-
-
 /* Helper Functions*/
-function giphyMessage(query, rating) {
-    return new Promise ( (resolve, reject ) => {
-        giphy.search('gifs', { "q": `${query}`, "rating" : `${rating}`, "limit" : 100 }).then((response) => {
-        let random_selection_index = Math.floor((Math.random() * response.data.length ) + 1)
-        resolve( response.data[random_selection_index].images.fixed_height.url); 
-        }).catch(() => {
-          reject("Error Finding Gif");
-      })
-    })
-}
 
 function setupUsersTable(users, user_list, server) {
     for( let i of user_list ){
@@ -136,19 +111,8 @@ function getVoiceChannels(channels) {
   for( let channel of channels) {
     if (channel.members.array().length > 0) {
       let users_in_voice = channel.members.keyArray(); // keys are user id 
-      // console.log(users_in_voice);
     }
   }
 }
 
-function voiceXPModifier(number_of_users) {
-  // increase 1% xp modifier per user in same channel
-  let xp = voice_xp * ( 1 + ( number_of_users / 100 ))
-  return xp;
-}
-
 client.login(token);
-
-module.exports = {
-	voiceXPModifier
-};
