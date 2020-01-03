@@ -1,8 +1,8 @@
 
-const { Rank } = require ('./rank');
-const { Level } = require ('./level');
-const { Money } = require ('./money');
-const { DB } = require('./db');
+const { Rank } = require ('../rank/rank');
+const { Level } = require ('../level/level');
+const { Money } = require ('../economy/money');
+const { DB } = require('../../db/db');
 let db = new DB();
 
 class User {

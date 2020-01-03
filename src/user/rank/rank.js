@@ -1,4 +1,4 @@
-let ranks = require('../conf/ranks.json');
+let ranks = require('../../../conf/ranks.json');
 
 class Rank {
     constructor() {

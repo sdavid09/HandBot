@@ -10,7 +10,7 @@
 const Discord = require('discord.js');
 const { token, giphy_token } = require('./conf/token.json');
 const { prefix, server_id, max_lvl, message_xp, voice_xp } = require('./conf/config.json');
-const { User } = require ('./src/user');
+const { User } = require ('./src/user/base/user');
 const GiphyClient  = require('giphy-js-sdk-core')
 var giphy = GiphyClient(giphy_token)
 
@@ -86,7 +86,8 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
      // User Joins a voice channel
      let users_in_channel = newUserChannel.members.keyArray().length;
-     user.addXP(voice_xp * ( 1 + ( users_in_channel / 100 )), newMember.id)
+     let xp = voiceXPModifier(users_in_channel);
+     user.addXP(xp, newMember.id)
 
   } else if(newUserChannel === undefined){
 
@@ -140,4 +141,14 @@ function getVoiceChannels(channels) {
   }
 }
 
+function voiceXPModifier(number_of_users) {
+  // increase 1% xp modifier per user in same channel
+  let xp = voice_xp * ( 1 + ( number_of_users / 100 ))
+  return xp;
+}
+
 client.login(token);
+
+module.exports = {
+	voiceXPModifier
+};
