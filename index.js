@@ -54,37 +54,37 @@ client.on('message', async message => {
         message.channel.send(`User: ${message.author.username}  XP: ${xp.xp}`);
     }
     // Display User Rank
-    else if (message.content.startsWith('!stats')){
-      let user_stats = await user.getAllUserStats(message.author.id)
-      const statsEmbedMessage = new Discord.RichEmbed()
-      .setColor('#ff8400')
-      .setTitle(message.author.username)
-      .setDescription(`${user_stats.rank}`)
-      .setThumbnail('https://cdn0.iconfinder.com/data/icons/rank-badge/64/rank_badge-13-512.png')
-      .addBlankField()
-      .addField('**Level**', `_${user_stats.level}_`, true)
-      .addField('**Xp**',  `_${user_stats.xp}_`, true)
-      .addField('**Money**', `_${user_stats.money}_`, true)
-      .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
-      .setTimestamp()
-      message.channel.send(statsEmbedMessage);
+    else if (message.content.startsWith('!stats')) {
+        let user_stats = await user.getAllUserStats(message.author.id)
+        const statsEmbedMessage = new Discord.RichEmbed()
+        .setColor('#ff8400')
+        .setTitle(message.author.username)
+        .setDescription(`${user_stats.rank}`)
+        .setThumbnail('https://cdn0.iconfinder.com/data/icons/rank-badge/64/rank_badge-13-512.png')
+        .addBlankField()
+        .addField('**Level**', `_${user_stats.level}_`, true)
+        .addField('**Xp**',  `_${user_stats.xp}_`, true)
+        .addField('**Money**', `_${user_stats.money}_`, true)
+        .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
+        .setTimestamp()
+        message.channel.send(statsEmbedMessage);
     }
     else {
-      user.addXP(message_xp, message.author.id);
+        user.addXP(message_xp, message.author.id);
     }
 });
 
 /* When User Joins a Voice Channel */
 client.on('voiceStateUpdate', (oldMember, newMember) => {
 
-  let oldUserChannel = oldMember.voiceChannel;
-  let newUserChannel = newMember.voiceChannel;
-  
-  if(oldUserChannel === undefined && newUserChannel !== undefined) {
+    let oldUserChannel = oldMember.voiceChannel;
+    let newUserChannel = newMember.voiceChannel;
+
+    if(oldUserChannel === undefined && newUserChannel !== undefined) {
 
      // User Joins a voice channel
-     let users_in_channel = newUserChannel.members.keyArray().length;
-     user.addXP(100, newMember.id)
+        let users_in_channel = newUserChannel.members.keyArray().length;
+        user.addXP(100, newMember.id)
 
   } else if(newUserChannel === undefined){
 
@@ -95,16 +95,16 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 /* Helper Functions*/
 
 function setupUsersTable(users, user_list, server) {
-    for( let i of user_list ){
-      let member = users.get(i)
-      let username = member.user.username ;
-      let user_id = member.user.id;
-      user.addUserToDB(user_id, username, server);
+    for( let i of user_list ) {
+        let member = users.get(i)
+        let username = member.user.username ;
+        let user_id = member.user.id;
+        user.addUserToDB(user_id, username, server);
     }
   };
 
 function getServerInfo(server_id){
-  return servers.get(server_id);
+    return servers.get(server_id);
 };
 
 function getVoiceChannels(channels) {

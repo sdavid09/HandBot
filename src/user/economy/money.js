@@ -6,7 +6,7 @@ class Money {
     }
 
     getUserMoney() {
-     
+        // return user money
     }
 }
 
