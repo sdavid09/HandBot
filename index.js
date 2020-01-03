@@ -20,12 +20,12 @@ var servers = client.guilds; // get all servers
 /* On Bot Startup */
 client.once('ready', () => {
     console.log('The HandBot is ready to serve the kingdom!');
-    var server = getServerInfo(server_id); 
+    var server = getServerInfo(server_id);
     // const channels = server.channels.filter(ch => ch.type === 'voice');
     // getVoiceChannels(channels.array());
     let users = server.members;
     user_list = users.keyArray()
-    setupUsersTable(users, user_list, server_id); 
+    setupUsersTable(users, user_list, server_id);
 });
 
 /* When User Joins The Server*/
@@ -110,7 +110,7 @@ function getServerInfo(server_id){
 function getVoiceChannels(channels) {
   for( let channel of channels) {
     if (channel.members.array().length > 0) {
-      let users_in_voice = channel.members.keyArray(); // keys are user id 
+      let users_in_voice = channel.members.keyArray(); // keys are user id
     }
   }
 }

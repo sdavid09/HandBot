@@ -1,7 +1,7 @@
 
 const { Rank } = require ('../rank/rank');
 const { Level, XP } = require ('../level/level');
-const { Money } = require ('../economy/money');
+const { Money } = require ('../../economy/money');
 const { DB } = require('../../db/db');
 let db = new DB();
 

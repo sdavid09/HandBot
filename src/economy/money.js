@@ -1,8 +1,8 @@
-let ranks = require('../../../conf/config.json');
+let ranks = require('../../conf/config.json');
 
 class Money {
-    constructor() {
-        this.money = 0;
+    constructor(value=0) {
+        this.value = 0;
     }
 
     getUserMoney() {

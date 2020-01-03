@@ -1,14 +1,12 @@
-const GiphyClient  = require('giphy-js-sdk-core')
-const { giphy_token } = require('../../conf/token.json');
-var giphy = GiphyClient(giphy_token)
+const assert = require('chai').assert;
+const giphy  = require('../../../src/extra/giphy');
 
-function gifMessage(query, rating) {
-    return new Promise ( (resolve, reject ) => {
-        giphy.search('gifs', { "q": `${query}`, "rating" : `${rating}`, "limit" : 100 }).then((response) => {
-        let random_selection_index = Math.floor((Math.random() * response.data.length ) + 1)
-        resolve( response.data[random_selection_index].images.fixed_height.url); 
-        }).catch(() => {
-          reject("Error Finding Gif");
-      })
+describe('GIPHY API', function() {
+    describe('GIF Welcome URL', function() {
+        it('Check if URL is string', async function () {
+            let gif_url = await giphy.gifMessage("welcome" ,'pg-13');
+            assert.typeOf(gif_url, 'string',  'URL is string');
+        })
     })
-}
+})
+
