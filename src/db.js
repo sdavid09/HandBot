@@ -15,7 +15,7 @@ class DB {
 
 	 get (sql, params=[]) {
 		this.db = new sqlite3.Database(this.db_file)
-		return new Promise( ( resolve, reject ) => {
+		let get_db_promise = new Promise( ( resolve, reject ) => {
             this.db.get( sql, params, ( err, rows ) => {
                 if ( err )
                     return reject( err );
@@ -23,25 +23,11 @@ class DB {
             } );
         } );
 		this.db.close;
+		return get_db_promise;
 	 }
 
 }
-class UserCommands extends DB{
 
-	addXP(xp, id) {
-		super.run(`UPDATE users SET xp=xp + ? WHERE id = ?`,[xp, id]);
-	}
-
-	getXP(id) {
-		let search_for_user_xp = super.get(`Select xp FROM users WHERE id = ?`,[id] );
-		return search_for_user_xp;		 		
-	}
-	getAllStats(id) {
-		let all_stats = super.get(`Select money, xp, rank, level FROM users WHERE id = ?`,[id] );
-		return all_stats;		 		
-	}
-
-}
 class UserInfo extends DB{
 	constructor() {
 		super (); // need to call super before calling this
@@ -64,12 +50,8 @@ class UserInfo extends DB{
 				FOREIGN KEY (server) REFERENCES servers(id));`);
 	}
 
-	insertUser(id, name, server) {
-		// create record of users 
-		super.run(`INSERT OR IGNORE INTO users (id, name, server) VALUES (?,?,?)`, [id, name, server]);
-	}
 }
 
 module.exports = {
-	DB, UserCommands, UserInfo
+	DB, UserInfo
 };

@@ -9,7 +9,7 @@
 // Configs and Dependencies
 const Discord = require('discord.js');
 const { token, giphy_token } = require('./conf/token.json');
-const { prefix, server_id, max_lvl, message_xp } = require('./conf/config.json');
+const { prefix, server_id, max_lvl, message_xp, voice_xp } = require('./conf/config.json');
 const { User } = require ('./src/user');
 const GiphyClient  = require('giphy-js-sdk-core')
 var giphy = GiphyClient(giphy_token)
@@ -21,7 +21,10 @@ var servers = client.guilds; // get all servers
 /* On Bot Startup */
 client.once('ready', () => {
     console.log('The HandBot is ready to serve the kingdom!');
+    // console.log(client.channels);
     var server = getServerInfo(server_id); 
+    // const channels = server.channels.filter(ch => ch.type === 'voice');
+    // getVoiceChannels(channels.array());
     let users = server.members;
     user_list = users.keyArray()
     setupUsersTable(users, user_list, server_id); 
@@ -73,6 +76,25 @@ client.on('message', async message => {
     }
 });
 
+/* When User Joins a Voice Channel */
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+
+  let oldUserChannel = oldMember.voiceChannel;
+  let newUserChannel = newMember.voiceChannel;
+  
+  if(oldUserChannel === undefined && newUserChannel !== undefined) {
+
+     // User Joins a voice channel
+     let users_in_channel = newUserChannel.members.keyArray().length;
+     user.addXP(voice_xp * ( 1 + ( users_in_channel / 100 )), newMember.id)
+
+  } else if(newUserChannel === undefined){
+
+    // User leaves a voice channel
+    console.log("Somoeone left a voice channel");
+  }
+})
+
 /* User Ranks Up*/
     // New Rank
     // giphyMessage("promoted" ,'pg-13')
@@ -108,5 +130,14 @@ function setupUsersTable(users, user_list, server) {
 function getServerInfo(server_id){
   return servers.get(server_id);
 };
+
+function getVoiceChannels(channels) {
+  for( let channel of channels) {
+    if (channel.members.array().length > 0) {
+      let users_in_voice = channel.members.keyArray(); // keys are user id 
+      // console.log(users_in_voice);
+    }
+  }
+}
 
 client.login(token);
