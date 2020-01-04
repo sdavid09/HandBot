@@ -2,12 +2,16 @@ var Events = require('events').EventEmitter;
 let evt = new Events();
 
 class Event {
-    constructor() {
-        this.event = evt;
+    constructor(event) {
+        this.event = event;
     }
 
-    addEvent(event, listener) {
+    addEvent(name, listener) {
         // add event to Event Emitter
+        this.event.on(name, data => {
+            listener();
+            console.log(`Added Event: ${this.event}`);
+        });
     }
 
     raiseEvent(event, listener) {
