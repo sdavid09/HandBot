@@ -28,30 +28,6 @@ class DB {
 
 }
 
-class UserInfo extends DB{
-    constructor() {
-        super (); // need to call super before calling this
-        this.setupInitialTables();
-    }
-
-    setupInitialTables() {
-        super.run(`CREATE TABLE IF NOT EXISTS servers (
-                id TEXT PRIMARY KEY, 
-                name TEXT NOT NULL);`);
-
-        super.run(`CREATE TABLE IF NOT EXISTS users (
-                id TEXT PRIMARY KEY, 
-                name TEXT NOT NULL,
-                money INT DEFAULT 0,
-                xp INT DEFAULT 0,
-                rank TEXT,  
-                level INT DEFAULT 1, 
-                server TEXT,
-                FOREIGN KEY (server) REFERENCES servers(id));`);
-    }
-
-}
-
 module.exports = {
-    DB, UserInfo
+    DB
 };
