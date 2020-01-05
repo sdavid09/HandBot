@@ -20,18 +20,6 @@ class Rank {
         }
     }
 
-    // getRankFromIndex(index) {
-    //     return new Promise((resolve, reject)=> {
-    //         let rank = this.ranks[index];
-    //         if (rank) {
-    //             return resolve(rank);
-    //         }
-    //         else {
-    //             reject()
-    //         }
-    //         } );
-    // }
-
     checkForRankPromotion(current_rank, current_xp) {
         // checks current xp with ranks if can promote
         let rank = current_rank;
@@ -50,8 +38,10 @@ class Rank {
         }
     }
 
-    promoteUser(id) {
+    promoteUser(User) {
         // change user rank to higher
+
+        // call event for promotion
     }
 }
 

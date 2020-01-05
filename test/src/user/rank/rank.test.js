@@ -25,4 +25,9 @@ describe('Rank Config Values', function() {
         let promote = rank.checkForRankPromotion(current_rank, current_xp);
         expect(promote).to.be.true;
     })
+
+    it('Promote User', async function () {
+        let current_rank = 'Peasant'
+        // expect(promote).to.be.true;
+    })
 })

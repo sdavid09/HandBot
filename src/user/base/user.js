@@ -2,39 +2,44 @@
 const { Rank } = require ('../rank/rank');
 const { Level, XP } = require ('../level/level');
 const { Money } = require ('../../economy/money');
-const { DB } = require('../../db/db');
-let db = new DB();
+const { UserDBConnector } = require('../../db/user_db');
+let db = new UserDBConnector();
 
 class User {
-    constructor() {
-        this.id;
-        this.level;
-        this.xp;
-        this.rank;
-        this.money;
+    constructor(id) {
+        this.id = id;
+        this.name = '';
+        this.level = 0;
+        this.xp = 0;
+        this.rank = '';
+        this.money = 0;
+        this.server = 0;
     }
 
-    async getAllUserStats(id) {
-        let all_stats = await db.get(`Select money, xp, rank, level FROM users WHERE id = ?`,[id] );
-        return all_stats;
+    setName(name) {
+        this.name = name;
     }
 
-    async getXP(id) {
-        let xp = new XP();
-        return await xp.getXP(id);
+    addXP(xp) {
+        this.xp += xp;
     }
 
-    addXP(value, id) {
-        let xp = new XP();
-        xp.addXP(value, id);
+    save() {
+        db.save(this)
     }
 
-    addUserToDB(id, name, server) {
-		// create record of users 
-	    db.run(`INSERT OR IGNORE INTO users (id, name, server) VALUES (?,?,?)`, [id, name, server]);
+    async get() {
+        let user = await db.get(this.id);
+        if (user) { // if user already in db get data and create user object
+            this.name = user.name;
+            this.xp = user.xp;
+            this.level = user.level;
+            this.rank = user.rank;
+            this.money = user.money;
+            this.server = user.server;
+        }
+        return this;
     }
-
-
 }
 
 module.exports = {
