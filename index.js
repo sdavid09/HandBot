@@ -9,7 +9,7 @@
 // Configs and Dependencies
 const Discord = require('discord.js');
 const { token } = require('./conf/token.json');
-const { prefix, server_id, max_lvl, message_xp, voice_xp } = require('./conf/config.json');
+const { prefix, server_id, message_xp} = require('./conf/config.json');
 const { User } = require ('./src/user/base/user');
 const giphy= require ('./src/extra/giphy');
 

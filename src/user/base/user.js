@@ -1,6 +1,6 @@
 
 const { Rank } = require ('../rank/rank');
-const { Level, XP } = require ('../level/level');
+const { Level, XPModifiers } = require ('../level/level');
 const { Money } = require ('../../economy/money');
 const { UserDBConnector } = require('../../db/user_db');
 let db = new UserDBConnector();
@@ -24,11 +24,10 @@ class User {
         let rankclass= new Rank();
         let user_rank = rankclass.checkForRankPromotion(this.rank, this.xp)
 
-        if ( user_rank ) {
+        if (user_rank) {
             this.rank = user_rank;
             this.money += rankclass.getRankBonus(user_rank);
             this.save();
-
         }
     }
 

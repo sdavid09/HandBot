@@ -37,4 +37,28 @@ describe('Rank Config Values', function() {
         expect(search_rank).to.be.an('string').that.is.not.empty &&
         expect(search_rank).to.equal(default_rank);
     })
+
+    it('Get next Rank 1', async function () {
+        let default_rank = "Peasant";
+        let next_rank = "Merchant"
+        let search_rank = rank.getNextRank(default_rank);
+        expect(search_rank).to.be.an('string').that.is.not.empty &&
+        expect(search_rank).to.equal(next_rank);
+    })
+
+    it('Get next Rank 2', async function () {
+        let default_rank = "King";
+        let next_rank = "King"
+        let search_rank = rank.getNextRank(default_rank);
+        expect(search_rank).to.be.an('undefined');
+    })
+
+    it('Get next Rank XP', async function () {
+        let default_rank = "Peasant";
+        let next_rank = "Merchant"
+        let next_rank_xp = rank.getXPToNextRank(default_rank);
+        expect(next_rank_xp).to.be.an('number') &&
+        expect(next_rank_xp).to.equal(5000);
+
+    })
 })

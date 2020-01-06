@@ -30,6 +30,26 @@ class Rank {
         }
     }
 
+    getNextRank(rank) {
+        // function to get next rank that user can be promoted to
+        let index = this.ranks.indexOf(rank);
+        if (index === (this.ranks.length - 1 )) {
+            // if value is equal to length of array then its at the end so exit
+            return;
+        }
+        return this.ranks[++index];
+    }
+
+    getXPToNextRank(rank) {
+        let next_rank = this.getNextRank(rank);
+        if (next_rank) {
+            let current_rank_xp = this.getRank(rank)["base_xp"]
+            let next_rank_xp = this.getRank(next_rank)["base_xp"]
+            return next_rank_xp - current_rank_xp;
+        }
+        return;
+    }
+
     getRankDefault() {
         return this.ranks[0]
     }
