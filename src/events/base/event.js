@@ -9,13 +9,15 @@ class Event {
     addEvent(name, listener) {
         // add event to Event Emitter
         this.event.on(name, data => {
-            listener();
+            // listener();
             console.log(`Added Event: ${this.event}`);
         });
     }
 
-    raiseEvent(event, listener) {
+    raiseEvent(name) {
+        
         // call the event
+        this.event.emit(name);
     }
 
     removeEvent(event, listener) {

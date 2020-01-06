@@ -11,7 +11,7 @@ class User {
         this.name = '';
         this.level = 0;
         this.xp = 0;
-        this.rank = '';
+        this.rank = new Rank().getRankDefault();
         this.money = 0;
         this.server = 0;
     }
@@ -20,8 +20,22 @@ class User {
         this.name = name;
     }
 
+    checkForRankPromotion() {
+        let rankclass= new Rank();
+        let user_rank = rankclass.checkForRankPromotion(this.rank, this.xp)
+
+        if ( user_rank ) {
+            this.rank = user_rank;
+            this.money += rankclass.getRankBonus(user_rank);
+            this.save();
+
+        }
+    }
+
     addXP(xp) {
         this.xp += xp;
+        // maybe add event instead of calling function
+        this.checkForRankPromotion();
     }
 
     save() {

@@ -23,11 +23,18 @@ describe('Rank Config Values', function() {
         let current_xp = 5000;
         let current_rank = 'Peasant'
         let promote = rank.checkForRankPromotion(current_rank, current_xp);
-        expect(promote).to.be.true;
+        expect(promote).to.be.not.false;
     })
 
-    it('Promote User', async function () {
+    it('Get Rank', async function () {
         let current_rank = 'Peasant'
-        // expect(promote).to.be.true;
+        let search_rank = rank.getRank(current_rank);
+        expect(search_rank).to.be.an('object').that.is.not.empty;
+    })
+    it('Get Default Rank', async function () {
+        let search_rank = rank.getRankDefault();
+        let default_rank = "Peasant";
+        expect(search_rank).to.be.an('string').that.is.not.empty &&
+        expect(search_rank).to.equal(default_rank);
     })
 })
