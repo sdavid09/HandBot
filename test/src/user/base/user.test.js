@@ -13,4 +13,26 @@ describe('User', function() {
             expect(user.xp).to.be.an('number');
         })
     })
+    describe('Check Add Xp', async function() {
+        user_id = '1234567';
+        let user = await new User(user_id);
+        it('Test User Xp = 0', async function()  {
+            expect(user.xp).to.equal(0) &&
+            expect(user.level).to.equal(1);
+        })
+        it('Test Add Xp to User', async function()  {
+            user.addXP(2500);
+            expect(user.xp).to.equal(2500) &&
+            expect(user.rank).to.equal("Peasant") &&
+            expect(user.level).to.equal(50) &&
+            expect(user.money).to.equal(25);
+        })
+        it('Check For user Promotion', async function()  {
+            user.addXP(2500);
+            expect(user.xp).to.equal(5000) &&
+            expect(user.rank).to.equal("Merchant") &&
+            expect(user.level).to.equal(1) &&
+            expect(user.money).to.equal(75) ;
+        })
+    })
 })

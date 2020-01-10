@@ -9,10 +9,10 @@ class User {
     constructor(id) {
         this.id = id;
         this.name = '';
-        this.level = 0;
         this.xp = 0;
         this.rank = new Rank().getRankDefault();
-        this.money = 0;
+        this.level = 1;
+        this.money = new Rank().getRankBonus(this.rank);
         this.server = 0;
     }
 
@@ -20,14 +20,22 @@ class User {
         this.name = name;
     }
 
+    checkLevel() {
+        let next_rank = new Rank()
+        let level = new Level(this.xp, next_rank.getXPToNextRank(this.rank))
+        return level.getLevel();
+    }
+
     checkForRankPromotion() {
         let rankclass= new Rank();
         let user_rank = rankclass.checkForRankPromotion(this.rank, this.xp)
+        this.level = this.checkLevel();
 
         if (user_rank) {
             this.rank = user_rank;
             this.money += rankclass.getRankBonus(user_rank);
-            this.save();
+            this.level = 1;
+            // this.save();
         }
     }
 

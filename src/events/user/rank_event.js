@@ -3,6 +3,6 @@ let evt = new Events();
 
 const { Event } = require('../base/event');
 
-class LevelEvents extends Event{
+class RankEvents extends Event{
 
 }
