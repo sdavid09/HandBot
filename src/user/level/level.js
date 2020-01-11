@@ -11,11 +11,12 @@ class XPModifiers {
 }
 
 class Level {
-    constructor(xp=0, xp_to_next_rank=0) {
+    constructor(xp=0, next_rank_xp=0, xp_to_next_rank=0) {
         this.xp = xp;
         this.level = 1;
         this.increment = 0; // amount of xp per level
         this.xp_to_next_rank = xp_to_next_rank;
+        this.next_rank_xp = next_rank_xp;
         // if values passed in setup level
         if (this.xp_to_next_rank && this.xp) {
             this.calculateLevel();
@@ -31,7 +32,8 @@ class Level {
         // setup user level calcuate based on xp to next rank
         this.increment = Math.round((this.xp_to_next_rank / max_lvl)) //
         if (this.increment && this.xp) {
-            this.level = Math.floor(this.xp / this.increment);
+            // calculate level
+            this.level = Math.abs(Math.floor(((this.next_rank_xp - this.xp) / (this.increment)) - ((max_lvl))))
         }
     }
 

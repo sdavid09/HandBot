@@ -21,8 +21,9 @@ class User {
     }
 
     checkLevel() {
-        let next_rank = new Rank()
-        let level = new Level(this.xp, next_rank.getXPToNextRank(this.rank))
+        let rank = new Rank()
+        let next_rank = rank.getNextRank(this.rank)
+        let level = new Level(this.xp, rank.getRankXP(next_rank), rank.getXPToNextRank(this.rank))
         return level.getLevel();
     }
 
@@ -51,12 +52,10 @@ class User {
 
     async get() {
         let user = await db.get(this.id);
-        console.log(user);
         if (user) { // if user already in db get data and create user object
             this.name = user.name;
             this.xp = user.xp;
             this.level = user.level;
-            console.log(`ALREADY IN HERE: ${user}`);
             this.rank = user.rank;
             this.money = user.money;
             this.server = user.server;
