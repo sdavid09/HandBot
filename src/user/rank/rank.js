@@ -64,7 +64,7 @@ class Rank {
             // look through all ranks
             let xp = this.getRankXP(this.ranks[i])
             // get rank base xp
-            if ( current_xp >= xp ) {
+            if ( current_xp >= xp && current_rank != this.ranks[this.ranks.length -1]) {
                 rank = this.ranks[i];
             }
         }

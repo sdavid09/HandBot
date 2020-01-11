@@ -13,7 +13,6 @@ function gifMessage(query, rating) {
     })
 }
 
-
 module.exports = {
     gifMessage
 };

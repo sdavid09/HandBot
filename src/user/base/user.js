@@ -51,10 +51,12 @@ class User {
 
     async get() {
         let user = await db.get(this.id);
+        console.log(user);
         if (user) { // if user already in db get data and create user object
             this.name = user.name;
             this.xp = user.xp;
             this.level = user.level;
+            console.log(`ALREADY IN HERE: ${user}`);
             this.rank = user.rank;
             this.money = user.money;
             this.server = user.server;
