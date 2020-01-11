@@ -1,8 +1,8 @@
-let ranks = require('../../../conf/ranks.json');
+let RANKS = require('../../../conf/ranks.json');
 
 class Rank {
     constructor() {
-        this.ranks = Object.keys(ranks).reverse(); // config must rank lowest on bottom
+        this.ranks = Object.keys(RANKS).reverse(); // config must rank lowest on bottom
     }
 
     getAllRanks() {
@@ -16,7 +16,7 @@ class Rank {
             return;
         }
         else {
-            return ranks[rank];
+            return RANKS[rank];
         }
     }
 
@@ -64,7 +64,7 @@ class Rank {
             // look through all ranks
             let xp = this.getRankXP(this.ranks[i])
             // get rank base xp
-            if ( current_xp >= xp ) {
+            if ( current_xp >= xp && current_rank != this.ranks[this.ranks.length -1]) {
                 rank = this.ranks[i];
             }
         }

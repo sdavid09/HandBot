@@ -21,8 +21,9 @@ class User {
     }
 
     checkLevel() {
-        let next_rank = new Rank()
-        let level = new Level(this.xp, next_rank.getXPToNextRank(this.rank))
+        let rank = new Rank()
+        let next_rank = rank.getNextRank(this.rank)
+        let level = new Level(this.xp, rank.getRankXP(next_rank), rank.getXPToNextRank(this.rank))
         return level.getLevel();
     }
 
