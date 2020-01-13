@@ -4,6 +4,7 @@ const {getUserFromMention} = require('../utils/user_mention');
 const Discord = require('discord.js');
 
 module.exports.run = async(client, message, args ) => {
+    // check user permission
     let user_to_search_id = message.author.id;
     if(args.length >= 1) {
         let match = getUserFromMention(args[0]);
@@ -24,4 +25,12 @@ module.exports.run = async(client, message, args ) => {
         .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
         .setTimestamp()
         message.channel.send(statsEmbedMessage);
+}
+module.exports.help = async(client, message, args ) => {
+    let help = "```Stats:\nDisplays all User Stats\nOptions:\n @<user>\n\tExample: !stats @FormulaLight```"
+    message.channel.send(help);
+}
+
+module.exports.permission = () => {
+
 }

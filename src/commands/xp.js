@@ -12,3 +12,7 @@ module.exports.run = async(client, message, args ) => {
     let user = await new User(user_to_search_id).get();
     message.channel.send(`User: ${user.name }  XP: ${user.xp}`);
 }
+module.exports.help = async(client, message, args ) => {
+    let help = "```XP:\nCommand Displays User XP\nOptions:\n @<user>\n\tExample: !xp @FormulaLight```"
+    message.channel.send(help);
+}
