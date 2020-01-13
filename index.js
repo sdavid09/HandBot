@@ -7,7 +7,7 @@
 // Configs and Dependencies
 const Discord = require('discord.js');
 const { token } = require('./conf/token.json');
-const { prefix, server_id} = require('./conf/config.json');
+const {server_id} = require('./conf/config.json');
 const { User } = require ('./src/user/base/user');
 const giphy= require ('./src/extra/giphy');
 const fs = require('fs');
@@ -34,6 +34,20 @@ fs.readdir('./src/events/' , (err, files)=>{
         let event = require(`./src/events/${file}`);
         let event_name = file.split('.')[0];
         client.on(event_name, event.bind(null, client));
+    });
+});
+
+client.commands = new Map();
+// Load Commands
+fs.readdir('./src/commands/' , (err, files)=>{
+    if(err) {
+        return console.log(err)
+    }
+
+    files.forEach(file=>{
+        let command = require(`./src/commands/${file}`);
+        let command_name = file.split('.')[0];
+        client.commands.set(command_name, command)
     });
 });
 

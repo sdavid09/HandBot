@@ -1,31 +1,26 @@
 const { User } = require ('../user/base/user');
-const { message_xp } = require('../../conf/config.json');
+const { message_xp, prefix } = require('../../conf/config.json');
 const Discord = require('discord.js');
 
 module.exports = async(client, message ) => {
 
-        let user = await new User(message.author.id).get();
-        if (message.content.startsWith('!xp')){
-            message.channel.send(`User: ${message.author.username}  XP: ${user.xp}`);
+    if (message.author.bot) return;
+    let user = await new User(message.author.id).get();
+    if (message.content.startsWith(`${prefix}`)) {
+        let full_command = message.content.split(" ")
+        let cmd = full_command[0].replace(`${prefix}`, ""); // get the command from 
+        let command = client.commands.get(cmd);
+        if(command) {
+            let args = []
+            if(full_command.length > 1) {
+                full_command.shift() // remove first element which is command
+                args = full_command;
+            }
+            command.run(client, message, args);
         }
-        // Display User Rank
-        else if (message.content.startsWith('!stats')) {
-            const statsEmbedMessage = new Discord.RichEmbed()
-            .setColor('#ff8400')
-            .setTitle(message.author.username)
-            .setDescription(`${user.rank}`)
-            .setThumbnail('https://cdn0.iconfinder.com/data/icons/rank-badge/64/rank_badge-13-512.png')
-            .addBlankField()
-            .addField('**Level**', `_${user.level}_`, true)
-            .addField('**Xp**',  `_${user.xp}_`, true)
-            .addField('**Money**', `_${user.money}_`, true)
-            .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
-            .setTimestamp()
-            message.channel.send(statsEmbedMessage);
-        }
-        else {
-            user.addXP(message_xp);
-        }
+    }
+    else {
+        user.addXP(message_xp);
         user.save();
-
+    }
 }
