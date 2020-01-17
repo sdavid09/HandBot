@@ -29,6 +29,10 @@ class Rank {
             return
         }
     }
+    getRankImage(rank) {
+        let found_rank = this.getRank(rank)
+        return found_rank["img"];
+    }
 
     getNextRank(rank) {
         // function to get next rank that user can be promoted to
@@ -76,9 +80,7 @@ class Rank {
             return false;
         }
     }
-
 }
-
 
 module.exports = {
 	Rank

@@ -14,6 +14,7 @@ class User {
         this.level = 1;
         this.money = new Rank().getRankBonus(this.rank);
         this.server = 0;
+        this.rank_img = new Rank().getRankImage(this.rank);
     }
 
     setName(name) {
@@ -59,6 +60,7 @@ class User {
             this.rank = user.rank;
             this.money = user.money;
             this.server = user.server;
+            this.rank_img = new Rank().getRankImage(user.rank);
         }
         return this;
     }

@@ -1,4 +1,4 @@
-// return user when someone mentions user in chat with @<name> 
+// return user when someone mentions user in chat with @<name>
 let regex = new RegExp('\<\@\!(.*)\>')
 function getUserFromMention(value) {
     let match = value.match(regex)
@@ -9,6 +9,7 @@ function getUserFromMention(value) {
         return;
     }
 }
+
 module.exports = {
     getUserFromMention
 }

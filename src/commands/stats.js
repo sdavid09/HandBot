@@ -22,7 +22,8 @@ module.exports.run = async(client, message, args ) => {
         .addField('**Level**', `_${user.level}_`, true)
         .addField('**Xp**',  `_${user.xp}_`, true)
         .addField('**Money**', `_${user.money}_`, true)
-        .setImage('https://cdn1.iconfinder.com/data/icons/profession-avatar-flat/64/Avatar-farmer-peasant-breeder-512.png')
+        .attachFiles([`../HandBot/img/${user.rank_img}`])
+        .setImage(`attachment://${user.rank_img}`)
         .setTimestamp()
         message.channel.send(statsEmbedMessage);
 }
