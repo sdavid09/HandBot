@@ -28,7 +28,7 @@ module.exports.run = async(client, message, args ) => {
         }
     }
     else if ( user.money < args[0]) {
-        message.channel.send(`Your balance is too low !gamble --help`);
+        message.channel.send(`Your balance is too low!`);
     }
     else {
         message.channel.send(`Invalid argument type`);
@@ -36,6 +36,6 @@ module.exports.run = async(client, message, args ) => {
 }
 
 module.exports.help = async(client, message, args ) => {
-    let help = "```Gamble:\nRoll 3 dice and if sum is greater than 13 you win double your bet!  Else you lose :(\nCheck your balance before! \nOptions:\n <amount>\n\tExample: !gamble 25```"
+    let help = "```Gamble:\nRoll 3 dice and if sum is greater than 13 you win double your bet!  Else you lose :(\nCheck your balance before! \nOptions:\n <amount>\nExample: !gamble 25```"
     message.channel.send(help);
 }

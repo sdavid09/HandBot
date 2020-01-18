@@ -17,7 +17,7 @@ module.exports = async(client, message ) => {
                 full_command.shift() // remove first element which is command
                 args = full_command;
             }
-            if(args[0] == "--help") {
+            if(args[0] === "--help" || args[0] === "-h") {
                 command.help(client, message, args);
             }
             else {

@@ -1,5 +1,5 @@
 /* Passe-dix style game where user rolls 3 dice. If the total sum of all three dice
- * is greater than 13, user get 75% their bet. Else they lose their bet.
+ * is greater than 13, user get double their bet. Else they lose their bet.
  *
  */
 
