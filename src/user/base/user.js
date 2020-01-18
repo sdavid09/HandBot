@@ -21,6 +21,13 @@ class User {
         this.name = name;
     }
 
+    updateMoney(amount) {
+        this.money += amount;
+        if(this.money < 0) {
+            this.money = 0;
+        }
+    }
+
     checkLevel() {
         let rank = new Rank()
         let next_rank = rank.getNextRank(this.rank)
