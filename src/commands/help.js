@@ -8,7 +8,7 @@ module.exports.run = async(client, message, args ) => {
     !stats -- displays all user stats\n\
     !gamble <value> -- Try your luck to gamble your money, or lose!\n\
     \n--------------------------\n\
-    *Options*: <cmd> [--help][-h] ```\
+    Options: <cmd> [--help][-h] ```\
     "
     message.channel.send(commands);
 }

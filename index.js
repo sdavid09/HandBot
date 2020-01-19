@@ -54,7 +54,7 @@ fs.readdir('./src/commands/' , (err, files)=>{
 });
 
 /* Helper Functions*/
-function addRole(member, user) {
+function addUserToRole(member, user) {
     // takes a guild member and gives default role
     let server = getServerInfo(server_id); // returns guild
     let user_role = user.rank;
@@ -73,7 +73,7 @@ async function setupUsersTable(users, user_list, server) {
         let username = member.user.username ;
         let user_id = member.user.id;
         let user = await new User(user_id).get();
-        addRole(member, user);
+        addUserToRole(member, user);
     }
   };
 
