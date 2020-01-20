@@ -3,18 +3,18 @@ const { Rank } = require ('../rank/rank');
 const { Level, XPModifiers } = require ('../level/level');
 const { Money } = require ('../../economy/money');
 const { UserDBConnector } = require('../../db/user_db');
-let db = new UserDBConnector();
 
+let db = new UserDBConnector();
 class User {
     constructor(id) {
         this.id = id;
-        this.name = '';
+        this.name = "";
         this.xp = 0;
-        this.rank = new Rank().getRankDefault();
+        this.rank = "Peasant";
         this.level = 1;
-        this.money = new Rank().getRankBonus(this.rank);
+        this.money = 25;
         this.server = 0;
-        this.rank_img = new Rank().getRankImage(this.rank);
+        this.rank_img = "Peasant.png";
     }
 
     setName(name) {
@@ -44,14 +44,13 @@ class User {
             this.rank = user_rank;
             this.money += rankclass.getRankBonus(user_rank);
             this.level = 1;
-            // this.save();
+            return true; // if user ranked up
         }
+        return false
     }
 
     addXP(xp) {
         this.xp += xp;
-        // maybe add event instead of calling function
-        this.checkForRankPromotion();
     }
 
     save() {
@@ -67,7 +66,7 @@ class User {
             this.rank = user.rank;
             this.money = user.money;
             this.server = user.server;
-            this.rank_img = new Rank().getRankImage(user.rank);
+            // this.rank_img = new Rank().getRankImage(user.rank);
         }
         return this;
     }

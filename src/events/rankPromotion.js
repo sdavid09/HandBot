@@ -1,6 +1,4 @@
 
-module.exports = (client) => {
-    client.on('rankPromotion', () => {
-        console.log("Rank Promoted");
-    })
+module.exports = async (client, message) => {
+    console.log("Rank Promoted");
 }

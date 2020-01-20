@@ -73,6 +73,8 @@ async function setupUsersTable(users, user_list, server) {
         let username = member.user.username ;
         let user_id = member.user.id;
         let user = await new User(user_id).get();
+        user.setName(username);
+        user.save();
         addUserToRole(member, user);
     }
   };
@@ -80,6 +82,5 @@ async function setupUsersTable(users, user_list, server) {
 function getServerInfo(server_id){
     return servers.get(server_id);
 };
-
 
 client.login(token);
