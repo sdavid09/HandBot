@@ -4,7 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 class DB {
 
     constructor() {
-        this.db_file = 'data.db';
+        this.db_file = './data/BOT_DATA.db';
      }
 
     run(sql, params=[]) {
