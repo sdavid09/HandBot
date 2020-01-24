@@ -38,8 +38,6 @@ class User {
     checkForRankPromotion() {
         let rankclass= new Rank();
         let user_rank = rankclass.checkForRankPromotion(this.rank, this.xp)
-        this.level = this.checkLevel();
-
         if (user_rank) {
             this.rank = user_rank;
             this.money += rankclass.getRankBonus(user_rank);
