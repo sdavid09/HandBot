@@ -29,9 +29,9 @@ class Rank {
             return
         }
     }
-    getRankImage(rank) {
-        let found_rank = this.getRank(rank)
-        return found_rank["img"];
+    static getRankImage(rank) {
+        let rank_values = RANKS[rank]
+        return rank_values["img"];
     }
 
     getNextRank(rank) {
