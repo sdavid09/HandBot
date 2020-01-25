@@ -5,5 +5,6 @@
     "message_xp": 50,
     "voice_xp" : 100,
     "daily_money_bonus": 50,
-    "daily_xp_bonus" : 1000
+    "daily_xp_bonus" : 1000,
+    "bot_channel" : "bot-commands"
 }

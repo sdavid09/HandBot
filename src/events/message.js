@@ -1,10 +1,11 @@
 const { User } = require ('../user/base/user');
 const { message_xp, prefix } = require('../../conf/config.json');
-const{server_id} = require('../../conf/config.json')
+const{ server_id, bot_channel } = require('../../conf/config.json')
 
 module.exports = async(client, message ) => {
 
     if (message.author.bot) return;
+    if(message.channel.name != bot_channel) return; // only limit to bot channel
     let user = await new User(message.author.id).get();
     if (message.content.startsWith(`${prefix}`)) {
         let full_command = message.content.split(" ")
