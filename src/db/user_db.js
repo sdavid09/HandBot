@@ -24,13 +24,17 @@ class UserDBConnector {
             server TEXT,
             FOREIGN KEY (server) REFERENCES servers(id));`);
     }
-
-    save(user) {
-        db.run(`INSERT OR IGNORE INTO users (id, name, server) VALUES (?,?,?)`, [user.id, user.name, user.server]);
-        db.run(`UPDATE users SET money = ?,xp = ?,rank = ?,level = ? WHERE id = ?;`,[user.money, user.xp, user.rank, user.level,user.id]);
+    async add(user) {
+        let insert_promise = await db.run(`INSERT OR IGNORE INTO users (id, name, server) VALUES (?,?,?)`, [user.id, user.name, user.server]);
     }
 
-   async get(id) {
+    async save(user) {
+        await this.add(user);
+        let update_promise = await db.run(`UPDATE users SET money = ?,xp = ?,rank = ?,level = ? WHERE id = ?;`,[user.money, user.xp, user.rank, user.level, user.id]);
+        return update_promise;
+    }
+
+    async get(id) {
         let all_stats = await db.get(`Select * FROM users WHERE id = ?`,[id] );
         return all_stats;
     }

@@ -5,9 +5,8 @@ const{ server_id, bot_channel } = require('../../conf/config.json')
 module.exports = async(client, message ) => {
 
     if (message.author.bot) return;
-    if(message.channel.name != bot_channel) return; // only limit to bot channel
     let user = await new User(message.author.id).get();
-    if (message.content.startsWith(`${prefix}`)) {
+    if ((message.content.startsWith(`${prefix}`)) && (message.channel.name === bot_channel)) {
         let full_command = message.content.split(" ")
         let cmd = full_command[0].replace(`${prefix}`, ""); // get the command from
         let command = client.commands.get(cmd);
@@ -26,6 +25,9 @@ module.exports = async(client, message ) => {
             }
         }
     }
+    else if((message.content.startsWith(`${prefix}`)) && (message.channel.name !== bot_channel)) {
+        return;
+    }
     else {
         user.addXP(message_xp); // gives xp to user if message sent in chat
         let promotion = user.checkForRankPromotion();
@@ -35,7 +37,8 @@ module.exports = async(client, message ) => {
             let server_role = server.roles.find(role=>role.name === user.rank);
             if(server_role) {
                 message.member.addRole(server_role).catch(console.error);
-                client.emit('rankPromotion', client, message) // call rankPromotion event
+                console.log(user.name);
+                client.emit('rankPromotion') // call rankPromotion event
             }
         }
         user.save();

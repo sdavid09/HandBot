@@ -30,8 +30,13 @@ class Rank {
         }
     }
     static getRankImage(rank) {
-        let rank_values = RANKS[rank]
-        return rank_values["img"];
+        let promise = new Promise((resolve, reject)=>{
+            let rank_values = RANKS[rank]
+            if(rank_values["img"])
+                return resolve(rank_values["img"]);
+            return reject();
+        })
+        return promise;
     }
 
     getNextRank(rank) {

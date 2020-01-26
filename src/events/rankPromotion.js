@@ -1,4 +1,4 @@
 
-module.exports = async (client, message) => {
-    console.log("Rank Promoted");
+module.exports = async () => {
+    console.log(`Rank Promoted`);
 }

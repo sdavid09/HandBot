@@ -9,18 +9,25 @@ class DB {
 
     run(sql, params=[]) {
         this.db = new sqlite3.Database(this.db_file)
-        this.db.run(sql, params);
+        let get_db_promise = new Promise((resolve, reject)=> {
+            this.db.run(sql, params, (err) => {
+                if (err)
+                    return reject(err);
+                resolve();
+            });
+        });
         this.db.close;
-     }
+        return get_db_promise;
+    }
 
     get (sql, params=[]) {
         this.db = new sqlite3.Database(this.db_file)
         let get_db_promise = new Promise((resolve, reject)=> {
             this.db.get( sql, params, ( err, rows ) => {
                 if (err)
-                    return reject( err );
+                    return reject(err);
                 resolve( rows );
-            } );
+            });
         });
         this.db.close;
         return get_db_promise;

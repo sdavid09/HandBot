@@ -7,22 +7,24 @@
 // Configs and Dependencies
 const Discord = require('discord.js');
 const { token } = require('./conf/token.json');
-const {server_id} = require('./conf/config.json');
-const { User } = require ('./src/user/base/user');
-const { Rank } = require ('./src/user/rank/rank');
-const giphy= require ('./src/extra/giphy');
+const { server_id } = require('./conf/config.json');
+const { User } = require('./src/user/base/user');
+const { Rank } = require('./src/user/rank/rank');
+const giphy = require('./src/extra/giphy');
+const { ServerDBConnector }  = require('./src/db/server_db');
 const fs = require('fs');
 
 const client = new Discord.Client();
 var servers = client.guilds; // get all servers
 
 /* On Bot Startup */
-client.once('ready', () => {
+client.once('ready', async () => {
     console.log('The HandBot is ready to serve the kingdom!');
     let server = getServerInfo(server_id); // returns guild
     let users = server.members;
     user_list = users.keyArray()
-    setupUsersTable(users, user_list, server_id);
+    setupServersTable();
+    setupUsersTable(users, user_list);
 
 });
 
@@ -74,10 +76,20 @@ async function setupUsersTable(users, user_list, server) {
         let user_id = member.user.id;
         let user = await new User(user_id).get();
         user.setName(username);
+        user.server = server_id;
         user.save();
         addUserToRole(member, user);
     }
   };
+
+async function setupServersTable() {
+    let server_db_connector = new ServerDBConnector();
+
+    for(let server of servers.keys()) {
+        let server_info = getServerInfo(server);
+        server_db_connector.save(server, server_info.name)
+    }
+}
 
 function getServerInfo(server_id){
     return servers.get(server_id);

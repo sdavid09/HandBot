@@ -35,13 +35,14 @@ class User {
         return level.getLevel();
     }
 
-    checkForRankPromotion() {
+   async checkForRankPromotion() {
         let rankclass= new Rank();
         let user_rank = rankclass.checkForRankPromotion(this.rank, this.xp)
         this.level = this.checkLevel();
         if (user_rank) {
             this.rank = user_rank;
             this.money += rankclass.getRankBonus(user_rank);
+            this.rank_img = await Rank.getRankImage(user_rank);
             this.level = 1;
             return true; // if user ranked up
         }
@@ -52,8 +53,8 @@ class User {
         this.xp += xp;
     }
 
-    save() {
-        db.save(this)
+    async save() {
+       await db.save(this)
     }
 
     async get() {
@@ -65,7 +66,7 @@ class User {
             this.rank = user.rank;
             this.money = user.money;
             this.server = user.server;
-            this.rank_img = Rank.getRankImage(user.rank);
+            this.rank_img = await Rank.getRankImage(user.rank);
         }
         return this;
     }
