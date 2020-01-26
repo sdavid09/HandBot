@@ -49,7 +49,7 @@ class User {
         return false
     }
 
-    addXP(xp) {
+   addXP(xp) {
         this.xp += xp;
     }
 

@@ -30,16 +30,9 @@ module.exports = async(client, message ) => {
     }
     else {
         user.addXP(message_xp); // gives xp to user if message sent in chat
-        let promotion = user.checkForRankPromotion();
+        let promotion = await user.checkForRankPromotion();
         if(promotion) {
-            let servers = client.guilds;
-            let server = servers.get(server_id);
-            let server_role = server.roles.find(role=>role.name === user.rank);
-            if(server_role) {
-                message.member.addRole(server_role).catch(console.error);
-                console.log(user.name);
-                client.emit('rankPromotion') // call rankPromotion event
-            }
+            client.emit('rankPromotion', client, user) // call rankPromotion event
         }
         user.save();
     }

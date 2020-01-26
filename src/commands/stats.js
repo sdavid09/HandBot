@@ -13,7 +13,10 @@ module.exports.run = async(client, message, args ) => {
         }
     }
     let user = await new User(user_to_search_id).get();
-    user.checkForRankPromotion();
+    let promotion = await user.checkForRankPromotion();
+    if(promotion) {
+        user.save();
+    }
     const statsEmbedMessage = new Discord.RichEmbed()
         .setColor('#ff8400')
         .setTitle(user.name)
