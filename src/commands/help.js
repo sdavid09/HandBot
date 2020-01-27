@@ -6,7 +6,7 @@ module.exports.run = async(client, message, args ) => {
     !xp -- displays user xp\n\
     !money -- display user money\n\
     !stats -- displays all user stats\n\
-    !gamble <value> -- Try your luck to gamble your money, or lose!\n\
+    !gamble <value> -- Roll 3 dice and if sum is greater than 11 you win double your bet!\n\
     \n--------------------------\n\
     Options: <cmd> [--help][-h] ```\
     "
