@@ -10,10 +10,12 @@ const { token } = require('./conf/token.json');
 const { server_id } = require('./conf/config.json');
 const { User } = require('./src/user/base/user');
 const { Rank } = require('./src/user/rank/rank');
+
 const giphy = require('./src/extra/giphy');
 const { ServerDBConnector }  = require('./src/db/server_db');
+const {DailyBonus} = require('./src/bonus/daily')
 const fs = require('fs');
-
+let daily = new DailyBonus();
 const client = new Discord.Client();
 var servers = client.guilds; // get all servers
 
@@ -25,7 +27,7 @@ client.once('ready', async () => {
     user_list = users.keyArray()
     setupServersTable();
     setupUsersTable(users, user_list);
-
+    daily.runDailyTasks(server);
 });
 
 // Load all Additional Events in events folder
@@ -81,6 +83,7 @@ async function setupUsersTable(users, user_list, server) {
         addUserToRole(member, user);
     }
   };
+
 
 async function setupServersTable() {
     let server_db_connector = new ServerDBConnector();
