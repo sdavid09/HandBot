@@ -1,5 +1,5 @@
 /* Passe-dix style game where user rolls 3 dice. If the total sum of all three dice
- * is greater than 13, user get double their bet. Else they lose their bet.
+ * is greater than 11, user get double their bet. Else they lose their bet.
  *
  */
 
@@ -19,10 +19,10 @@ class ThreeDice {
 
     play(bet=0) {
         let sum = this.rollDice();
-        if(isNaN(bet) || bet <=0) {
+        if(isNaN(bet) || bet <=0 || bet % 1 != 0) {
             return false;
         }
-        else if (sum >= 13) {
+        else if (sum >= 11) {
             return bet * 2;
         }
         else {
