@@ -16,7 +16,7 @@ class DB {
                 resolve();
             });
         });
-        this.db.close;
+        this.db.close();
         return get_db_promise;
     }
 
@@ -29,7 +29,7 @@ class DB {
                 resolve( rows );
             });
         });
-        this.db.close;
+        this.db.close();
         return get_db_promise;
     }
 
