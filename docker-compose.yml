@@ -1,0 +1,9 @@
+version: "3"
+services:
+  handbot:
+    image: "handbot:latest"
+    volumes:
+      - ./conf/:/opt/Handbot/conf
+      - ./img/:/opt/Handbot/img
+      - ./data/:/opt/Handbot/data
+    container_name: "handbot"

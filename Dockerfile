@@ -1,9 +1,9 @@
 # base image where node is installed
-FROM node:lts-alpine3.10
+FROM node:latest
 
 RUN mkdir -p /opt/HandBot
 
-COPY ../HandBot /opt/HandBot
+COPY . /opt/HandBot
 
 RUN cd /opt/HandBot \
     && npm install
