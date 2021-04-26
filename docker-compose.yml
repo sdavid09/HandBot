@@ -1,9 +1,16 @@
 version: "3"
 services:
-  handbot:
-    image: "handbot:latest"
-    volumes:
-      - ./conf/:/opt/Handbot/conf
-      - ./img/:/opt/Handbot/img
-      - ./data/:/opt/Handbot/data
-    container_name: "handbot"
+# handbot:
+#   image: "handbot:latest"
+#   volumes:
+#     - ./conf/:/opt/Handbot/conf
+#     - ./img/:/opt/Handbot/img
+#     - ./data/:/opt/Handbot/data
+#   container_name: "handbot"
+    mongodb:
+      image: "mongo:latest"
+      ports: 
+        - "27017:27017"
+#     volumes:
+#       - ./data:/opt/Handbot/data
+      container_name: "db"
