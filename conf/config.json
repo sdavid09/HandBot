@@ -1,10 +1,10 @@
 {
-    "prefix": "!",
-    "server_id": "578044091292712960",
-    "max_lvl" : 100,
-    "message_xp": 50,
-    "voice_xp" : 100,
-    "daily_money_bonus": 10,
-    "daily_xp_bonus" : 150,
-    "bot_channel" : "bot-commands"
+  "prefix": "!",
+  "server_id": "578044091292712960",
+  "max_lvl": 100,
+  "message_xp": 50,
+  "voice_xp": 100,
+  "daily_money_bonus": 10,
+  "daily_xp_bonus": 150,
+  "bot_channel": "bot-commands"
 }
