@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "verbose": false
+  },
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage --silent=false"
   },
   "author": "Shobin David",
   "license": "ISC",

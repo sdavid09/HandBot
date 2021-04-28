@@ -31,19 +31,26 @@ class UserPersistenceAdapter {
     }
   }
 
-  async findById(id) {
-    let query;
-    try {
-      query = await User.findOne({ _id: id });
-    } catch (e) {
-      console.log(e);
-      return -1;
-    } finally {
-      this.db.close();
-      return query;
-    }
+  async findUserById(id) {
+    const user = await User.findOne({ _id: id }).exec();
+    this.db.close();
+    return user;
   }
-  async update() {}
+
+  async update(id, value) {
+    const user = await User.findOneAndUpdate(
+      id,
+      value,
+      { upsert: true, returnOriginal: false },
+      (err, doc) => {
+        if (err) {
+          console.log("Update Error!");
+        }
+      }
+    );
+    this.db.close();
+    return user;
+  }
 }
 module.exports = {
   UserPersistenceAdapter,
