@@ -37,28 +37,21 @@ class UserPersistenceAdapter {
   }
 
   async update(id, value) {
-    await this.connect();
-    const user = await User.findOneAndUpdate(
-      id,
-      value,
-      { upsert: true, returnOriginal: false },
-      (err, doc) => {
-        if (err) {
-          console.log("Update Error!");
-        }
-      }
-    );
-    this.db.close();
+    let user;
+    try {
+      await this.connect();
+      user = await User.findOneAndUpdate(id, value, {
+        new: true,
+        upsert: true,
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.db.close();
+    }
     return user;
   }
 }
 module.exports = {
   UserPersistenceAdapter,
 };
-
-// let user_adapter = new UserPersistenceAdapter();
-// let test_user_id = {
-//   _id: "1234567891011",
-// };
-// let user = user_adapter.findUserById("1234567891011");
-// user.then(console.log);
