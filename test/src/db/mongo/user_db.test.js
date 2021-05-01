@@ -9,34 +9,30 @@ let test_user = {
   level: 5,
 };
 
-describe("Mongoose Test", function () {
-  describe("Add User to MongoDB", function () {
-    test("Insert sample user", async function () {
-      let user_adapter = new UserPersistenceAdapter();
-      await user_adapter.db.dropDatabase();
-      let code = await user_adapter.save(test_user);
-      expect(code).not.toEqual(-1);
-    });
+describe("Add User to MongoDB", function () {
+  test("Insert sample user", async function () {
+    let user_adapter = new UserPersistenceAdapter();
+    // await user_adapter.db.dropDatabase();
+    let code = await user_adapter.save(test_user);
+    expect(code).not.toEqual(-1);
   });
-  describe("Retrieve User", function () {
-    it("Should Retrieve User from ID", async function () {
-      let user_adapter = new UserPersistenceAdapter();
-      let test_user_id = {
-        _id: "1234567891011",
-      };
-      let user = user_adapter.findUserById("1234567891011");
-      user.then((value) => {
-        console.log(value);
-        // expect(value).not.toBeUndefined();
-        xpect(value).toEqual(1);
-      });
-    });
+});
+
+describe("Retrieve User", function () {
+  test("Should Retrieve User from ID", async function () {
+    let user_adapter = new UserPersistenceAdapter();
+    let test_user_id = {
+      _id: "1234567891011",
+    };
+    let user = await user_adapter.findUserById("1234567891011");
+    expect(user).toBeDefined();
+    // expect.assertions(1);
   });
-  xdescribe("Retrieve Non Existen User", function () {
-    it("Should Not Retrieve any User from ID", async function () {
-      let user_adapter = new UserPersistenceAdapter();
-      let user = await user_adapter.findUserById("007");
-      expect(user).toBeUndefined();
-    });
+});
+xdescribe("Retrieve Non Existen User", function () {
+  it("Should Not Retrieve any User from ID", async function () {
+    let user_adapter = new UserPersistenceAdapter();
+    let user = await user_adapter.findUserById("007");
+    expect(user).toBeUndefined();
   });
 });
