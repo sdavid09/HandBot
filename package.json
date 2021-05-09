@@ -7,7 +7,7 @@
     "verbose": false
   },
   "scripts": {
-    "test": "jest --coverage --silent=false"
+    "test": "jest --coverage --silent=false --detectOpenHandles"
   },
   "author": "Shobin David",
   "license": "ISC",

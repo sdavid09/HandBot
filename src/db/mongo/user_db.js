@@ -1,19 +1,11 @@
 "use strict";
-const mongoose = require("mongoose");
+const { MongoPersistenceAdapter } = require("./db");
 const { User } = require("../../model/user");
 
-class UserPersistenceAdapter {
+class UserPersistenceAdapter extends MongoPersistenceAdapter {
   constructor() {
+    super(User);
     this.url = "mongodb://localhost:27017/handbot";
-  }
-
-  async connect() {
-    await mongoose.connect(this.url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    this.db = mongoose.connection;
   }
 
   async save(values) {
