@@ -17,15 +17,17 @@ class MongoPersistenceAdapter {
   }
 
   async save(values) {
+    let returncode = 0;
     try {
       await this.connect();
       let model = this.mongooseModel(values);
       await model.save();
     } catch (e) {
       console.log(e);
-      return -1;
+      returncode = -1;
     } finally {
       this.db.close();
+      return returncode;
     }
   }
 
