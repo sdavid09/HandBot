@@ -14,6 +14,14 @@ class UserPersistenceAdapter extends MongoPersistenceAdapter {
   async addXPtoUser(id, value) {
     return await this.update(id, { $inc: { xp: value } });
   }
+
+  async findUserRankById(id) {
+    return await this.findOneAndPopulate(
+      { _id: id },
+      "Rank",
+      "name icon ranking"
+    );
+  }
 }
 module.exports = {
   UserPersistenceAdapter,

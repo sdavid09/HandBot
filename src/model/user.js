@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const Item = require("../model/item");
+const Rank = require("../model/rank");
 
 const userSchema = new Schema(
   {
@@ -8,7 +9,7 @@ const userSchema = new Schema(
     username: String,
     xp: Number,
     level: Number,
-    rank: String,
+    rank: { type: Schema.Types.ObjectId, ref: "Rank" },
     money: Number,
     items: [{ type: Schema.Types.ObjectId, ref: "Item" }],
   },

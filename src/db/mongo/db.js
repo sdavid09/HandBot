@@ -38,6 +38,16 @@ class MongoPersistenceAdapter {
     return model;
   }
 
+  async findOneAndPopulate(value, ...populate_filter) {
+    await this.connect();
+    const model = await this.mongooseModel
+      .findOne(value)
+      .populate(populate_filter)
+      .exec();
+    this.db.close();
+    return model;
+  }
+
   async update(filter, updateValue) {
     let user;
     try {

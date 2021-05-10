@@ -1,13 +1,27 @@
-const { UserPersistenceAdapter } = require("../../../../src/db/mongo/user_db");
+const {
+  UserPersistenceAdapter,
+} = require("../../../../src/db/mongo/user_adapter");
+const {
+  RankPersistenceAdapter,
+} = require("../../../../src/db/mongo/rank_adapter");
 const { MongoPersistenceAdapter } = require("../../../../src/db/mongo/db");
 const { User } = require("../../../../src/model/user");
+const { Rank } = require("../../../../src/model/rank");
+
+let test_rank = new Rank({
+  _id: 1,
+  name: "Peasant",
+  icon: "https://www.peasant.com",
+  ranking: 10,
+  bonus: { xp: 0, money: 25 },
+});
 
 let test_user = {
   _id: "1234567891011",
   username: "FormulaLight",
   money: 0,
+  rank: test_rank._id,
   xp: 342,
-  rank: "Peasant",
   level: 5,
 };
 
@@ -19,10 +33,15 @@ async function clearCollection() {
   await mydb.close();
 }
 
+beforeAll(async () => {
+  return await clearCollection();
+});
+
 describe("Add User to MongoDB", function () {
   test("Insert sample user", async function () {
+    let rank_adapter = new RankPersistenceAdapter();
+    await rank_adapter.save(test_rank);
     let user_adapter = new UserPersistenceAdapter();
-    await clearCollection();
     let code = await user_adapter.save(test_user);
     expect(code).not.toEqual(-1);
   });
@@ -44,10 +63,19 @@ describe("Retrieve Non Existen User", function () {
   });
 });
 
-xdescribe("Update User Values in MongooDB", function () {
+describe("Update User Values in MongooDB", function () {
   test("Should Update User Experience to new Value", async function () {
     let user_adapter = new UserPersistenceAdapter();
     let updated_user = await user_adapter.addXPtoUser("1234567891011", 1000);
     expect(updated_user.xp).toEqual(1342);
+  });
+});
+
+xdescribe("Check User Rank in MongooDB", function () {
+  test("Should Return User Rank", async function () {
+    let user_adapter = new UserPersistenceAdapter();
+    let user = await user_adapter.findUserRankById("1234567891011");
+    console.log(user);
+    expect(user.rank).toEqual("Peasant");
   });
 });

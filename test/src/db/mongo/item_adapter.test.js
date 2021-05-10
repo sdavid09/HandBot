@@ -19,12 +19,14 @@ async function clearCollection() {
   await mydb.close();
 }
 
+beforeAll(async () => {
+  return await clearCollection();
+});
+
 describe("Add Item to MongoDB", function () {
   test("Insert sample item", async function () {
     let item_adapter = new ItemPersistenceAdapter();
-    await clearCollection();
     let code = await item_adapter.save(test_item);
-    console.log(code);
     expect(code).not.toEqual(-1);
   });
 });
