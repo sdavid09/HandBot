@@ -47,7 +47,7 @@ describe("Retrieve Non Existen User", function () {
 describe("Update User Values in MongooDB", function () {
   test("Should Update User Experience to new Value", async function () {
     let user_adapter = new UserPersistenceAdapter();
-    let updated_user = await user_adapter.update("1234567891011", { xp: 1020 });
-    expect(updated_user.xp).toEqual("1020");
+    let updated_user = await user_adapter.addXPtoUser("1234567891011", 1000);
+    expect(updated_user.xp).toEqual(1342);
   });
 });

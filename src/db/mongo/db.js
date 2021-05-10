@@ -16,7 +16,7 @@ class MongoPersistenceAdapter {
     this.db = mongoose.connection;
   }
 
-  async save(values, mongooseModel) {
+  async save(values) {
     try {
       await this.connect();
       let model = this.mongooseModel(values);
