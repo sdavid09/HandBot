@@ -18,7 +18,7 @@ class UserPersistenceAdapter extends MongoPersistenceAdapter {
   async findUserRankById(id) {
     return await this.findOneAndPopulate(
       { _id: id },
-      "Rank",
+      "rank",
       "name icon ranking"
     );
   }

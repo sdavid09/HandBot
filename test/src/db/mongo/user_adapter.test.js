@@ -71,11 +71,10 @@ describe("Update User Values in MongooDB", function () {
   });
 });
 
-xdescribe("Check User Rank in MongooDB", function () {
+describe("Check User Rank in MongooDB", function () {
   test("Should Return User Rank", async function () {
     let user_adapter = new UserPersistenceAdapter();
     let user = await user_adapter.findUserRankById("1234567891011");
-    console.log(user);
-    expect(user.rank).toEqual("Peasant");
+    expect(user.rank.name).toEqual("Peasant");
   });
 });
