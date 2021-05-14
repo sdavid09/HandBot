@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "jest": {
-    "verbose": false
+    "verbose": false,
+    "testEnvironment": "node"
   },
   "scripts": {
     "test": "jest --coverage --silent=false --detectOpenHandles"

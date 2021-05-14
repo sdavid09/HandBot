@@ -11,6 +11,7 @@ class MongoPersistenceAdapter {
     await mongoose.connect(this.url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
 
     this.db = mongoose.connection;
