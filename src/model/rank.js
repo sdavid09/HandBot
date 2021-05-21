@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const rankSchema = new Schema(
   {
+    _id: Number,
     name: String,
     icon: String,
     ranking: Number,

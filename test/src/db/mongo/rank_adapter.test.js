@@ -4,11 +4,20 @@ const {
 const { MongoPersistenceAdapter } = require("../../../../src/db/mongo/db");
 const { Rank } = require("../../../../src/model/Rank");
 
-let test_rank = {
+let peasant_rank = {
+  _id: 1,
   name: "Peasant",
   icon: "https://www.peasant.com",
   ranking: 10,
   bonus: { xp: 0, money: 25 },
+};
+
+let merchant_rank = {
+  _id: 2,
+  name: "Merchant",
+  icon: "https://www.merchant.com",
+  ranking: 9,
+  bonus: { xp: 5000, money: 50 },
 };
 
 async function clearCollection() {
@@ -24,10 +33,12 @@ beforeAll(async () => {
 });
 
 describe("Add Rank to MongoDB", function () {
-  test("Insert sample Rank", async function () {
+  test("Insert Ranks", async function () {
     let rank_adapter = new RankPersistenceAdapter();
-    let code = await rank_adapter.save(test_rank);
-    expect(code).not.toEqual(-1);
+    let peasantcode = await rank_adapter.save(peasant_rank);
+    let merchantcode = await rank_adapter.save(merchant_rank);
+    expect(peasantcode).not.toEqual(-1);
+    expect(merchantcode).not.toEqual(-1);
   });
 });
 
