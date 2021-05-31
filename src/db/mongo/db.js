@@ -50,10 +50,10 @@ class MongoPersistenceAdapter {
   }
 
   async update(filter, updateValue) {
-    let user;
+    let model;
     try {
       await this.connect();
-      user = await this.mongooseModel.findOneAndUpdate(filter, updateValue, {
+      model = await this.mongooseModel.findOneAndUpdate(filter, updateValue, {
         new: true,
         upsert: true,
       });
@@ -62,7 +62,7 @@ class MongoPersistenceAdapter {
     } finally {
       this.db.close();
     }
-    return user;
+    return model;
   }
 
   async close() {

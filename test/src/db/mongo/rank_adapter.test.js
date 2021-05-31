@@ -49,3 +49,11 @@ describe("Retrieve Rank in MongoDB", function () {
     expect(rank.bonus.money).toEqual(25);
   });
 });
+
+describe("Retrieve Rank By Ranking ID MongoDB", function () {
+  test("Should Retrieve Rank by Ranking ID", async function () {
+    let rank_adapter = new RankPersistenceAdapter();
+    let rank = await rank_adapter.findRankByRankingID(9);
+    expect(rank.name).toEqual("Merchant");
+  });
+});

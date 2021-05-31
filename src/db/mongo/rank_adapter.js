@@ -10,6 +10,10 @@ class RankPersistenceAdapter extends MongoPersistenceAdapter {
   async findRankByName(rank_name) {
     return await this.findOne({ name: rank_name });
   }
+
+  async findRankByRankingID(rank_id) {
+    return await this.findOne({ ranking: rank_id });
+  }
 }
 module.exports = {
   RankPersistenceAdapter,
