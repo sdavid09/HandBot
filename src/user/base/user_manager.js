@@ -2,21 +2,27 @@
 const { RankPersistenceAdapter } = require("../../db/mongo/rank_adapter");
 const { UserPersistenceAdapter } = require("../../db/mongo/user_adapter");
 
-class UserController {
-  async promoteUserRank(user) {
+class UserManager {
+  async promoteUserRank(user_id) {
+    let user_adapter = new UserPersistenceAdapter();
+    let user = await user_adapter.findUserRankById(user_id);
+    let code = 0;
     // check if hit max ranking, assumes rank 1 is highest
     if (user.rank.ranking <= 1) {
-      console.log(` Can't Promote ${user.name} Hit max Rank!`);
+      throw new UserRankError(`Can't Promote ${user.name} Already max Rank!`);
     } else {
       let rank_adapter = new RankPersistenceAdapter();
       user.rank = await rank_adapter.findRankByRankingID(user.rank.ranking - 1);
-      // let user_adapter = new UserPersistenceAdapter();
-      // let code = await user_adapter.save(user);
+      code = await user_adapter.save(user);
     }
-    return user;
+
+    return code;
   }
 }
 
+class UserRankError extends Error {}
+
 module.exports = {
-  UserController,
+  UserManager,
+  UserRankError,
 };
