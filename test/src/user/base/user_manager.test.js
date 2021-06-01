@@ -86,7 +86,15 @@ describe("Promote User Check for Error", function () {
 describe("Promote User ", function () {
   test("Promote User Successfully", async function () {
     let user_manager = new UserManager();
-    let code = await user_manager.promoteUserRank("1234567891011");
-    expect(code).toEqual(0);
+    await expect(
+      user_manager.promoteUserRank("1234567891011")
+    ).resolves.not.toThrow();
+  });
+});
+
+describe("Promote User Test if Cant find User", function () {
+  test("Test if Cant find User in promotion", async function () {
+    let user_manager = new UserManager();
+    await expect(user_manager.promoteUserRank("112345")).rejects.toThrow();
   });
 });

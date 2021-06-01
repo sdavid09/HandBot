@@ -18,17 +18,14 @@ class MongoPersistenceAdapter {
   }
 
   async save(values) {
-    let returncode = 0;
     try {
       await this.connect();
       let model = this.mongooseModel(values);
       await model.save();
     } catch (e) {
-      console.log(e);
-      returncode = -1;
+      throw new MongoPersistenceAdapterErrors(e);
     } finally {
       this.db.close();
-      return returncode;
     }
   }
 
@@ -69,6 +66,10 @@ class MongoPersistenceAdapter {
     await this.db.close();
   }
 }
+
+class MongoPersistenceAdapterErrors extends Error {}
+
 module.exports = {
   MongoPersistenceAdapter,
+  MongoPersistenceAdapterErrors,
 };

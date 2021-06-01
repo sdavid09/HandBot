@@ -8,7 +8,12 @@ class UserPersistenceAdapter extends MongoPersistenceAdapter {
   }
 
   async findUserById(id) {
-    return await this.findOne({ _id: id });
+    let value = await this.findOne({ _id: id });
+    if (value) {
+      return value;
+    } else {
+      throw new UserFindByIDError(`Can't Find User Id : ${id}`);
+    }
   }
 
   async addXPtoUser(id, value) {
@@ -16,13 +21,22 @@ class UserPersistenceAdapter extends MongoPersistenceAdapter {
   }
 
   async findUserRankById(id) {
-    return await this.findOneAndPopulate(
+    let value = await this.findOneAndPopulate(
       { _id: id },
       "rank",
       "name icon ranking"
     );
+    if (value) {
+      return value;
+    } else {
+      throw new UserFindRankByIDError();
+    }
   }
 }
+
+class UserFindByIDError extends Error {}
+class UserFindRankByIDError extends Error {}
+
 module.exports = {
   UserPersistenceAdapter,
 };

@@ -4,7 +4,10 @@ const {
 const {
   RankPersistenceAdapter,
 } = require("../../../../src/db/mongo/rank_adapter");
-const { MongoPersistenceAdapter } = require("../../../../src/db/mongo/db");
+const {
+  MongoPersistenceAdapter,
+  MongoPersistenceAdapterErrors,
+} = require("../../../../src/db/mongo/db");
 const { User } = require("../../../../src/model/user");
 const { Rank } = require("../../../../src/model/rank");
 
@@ -64,8 +67,7 @@ describe("Add User to MongoDB", function () {
     let rank_adapter = new RankPersistenceAdapter();
     await rank_adapter.save(peasant_rank);
     let user_adapter = new UserPersistenceAdapter();
-    let code = await user_adapter.save(test_user_1);
-    expect(code).not.toEqual(-1);
+    await expect(user_adapter.save(test_user_1)).resolves.not.toThrow();
   });
 });
 
@@ -78,10 +80,9 @@ describe("Retrieve User in MongoDB", function () {
 });
 
 describe("Retrieve Non Existent User", function () {
-  it("Should Not Retrieve any User from ID", async function () {
+  it("Should Not Retrieve and Throw Erorr", async function () {
     let user_adapter = new UserPersistenceAdapter();
-    let user = await user_adapter.findUserById("007");
-    expect(user).toEqual(null);
+    await expect(user_adapter.findUserById("007")).rejects.toThrow();
   });
 });
 
@@ -106,7 +107,6 @@ describe("Add Second User to MongoDB", function () {
     let user_adapter = new UserPersistenceAdapter();
     let rank_adapter = new RankPersistenceAdapter();
     await rank_adapter.save(merchant_rank);
-    let code = await user_adapter.save(test_user_2);
-    expect(code).not.toEqual(-1);
+    await expect(user_adapter.save(test_user_2)).resolves.not.toThrow();
   });
 });
