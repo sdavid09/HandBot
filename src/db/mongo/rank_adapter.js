@@ -15,6 +15,7 @@ class RankPersistenceAdapter extends MongoPersistenceAdapter {
     return await this.findOne({ ranking: rank_id });
   }
 }
+
 module.exports = {
   RankPersistenceAdapter,
 };

@@ -1,72 +1,62 @@
 {
-    "King" : {
-        "rank" : 1,
-        "base_xp" : 1000000,
-        "description" : "King",
-        "bonus" : 25000,
-        "img": "King.png"
-    },
-    "Lord" : {
-        "rank" : 2,
-        "base_xp" : 500000,
-        "description" : "Lords",
-        "bonus" : 10000,
-        "img": "Lord.png"
-    },
-    "Knight" : {
-        "rank" : 3,
-        "base_xp" : 250000,
-        "description" : "Knights",
-        "bonus" : 5000,
-        "img": "Knight.png"
-    },
-    "Noble" : {
-        "rank" : 4,
-        "base_xp" : 175000,
-        "description" : "Nobles",
-        "bonus" : 2000,
-        "img": "Noble.png"
-    },
-    "Scholar" : {
-        "rank" : 5,
-        "base_xp" : 100000,
-        "description" : "Scholar",
-        "bonus" : 1000,
-        "img": "Scholar.png"
-    },
-    "Bard" : {
-        "rank" : 6,
-        "base_xp" : 50000,
-        "description" : "Bard",
-        "bonus" : 400,
-        "img": "Bard.png"
-    },
-    "Artisan" : {
-        "rank" : 7,
-        "base_xp" : 25000,
-        "description" : "Artisan",
-        "bonus" : 225,
-        "img": "Artisan.png"
-    },
-    "Mercenary" : {
-        "rank" : 8,
-        "base_xp" : 13000,
-        "description" : "Mercenary",
-        "bonus" : 100,
-        "img": "Mercenary.png"
-    },
-    "Merchant" : {
-        "rank" : 9,
-        "base_xp" : 5000,
-        "description" : "Merchant",
-        "bonus" : 50,
-        "img": "Merchant.png"
-    },
-    "Peasant" : {
-        "rank" : 10,
-        "base_xp" : 0,
-        "description" : "Peasant",
-        "bonus" : 25,
-        "img": "Peasant.png"
-    }
+  "King": {
+    "ranking": 1,
+    "xp": 1000000,
+    "bonus": { "money": 25000 },
+    "img": "King.png"
+  },
+  "Lord": {
+    "ranking": 2,
+    "xp": 500000,
+    "bonus": { "money": 10000 },
+    "img": "Lord.png"
+  },
+  "Knight": {
+    "ranking": 3,
+    "xp": 250000,
+    "bonus": { "money": 5000 },
+    "img": "Knight.png"
+  },
+  "Noble": {
+    "ranking": 4,
+    "xp": 175000,
+    "bonus": { "money": 2000 },
+    "img": "Noble.png"
+  },
+  "Scholar": {
+    "ranking": 5,
+    "xp": 100000,
+    "bonus": { "money": 1000 },
+    "img": "Scholar.png"
+  },
+  "Bard": {
+    "ranking": 6,
+    "xp": 50000,
+    "bonus": { "money": 400 },
+    "img": "Bard.png"
+  },
+  "Artisan": {
+    "ranking": 7,
+    "xp": 25000,
+    "bonus": { "money": 225 },
+    "img": "Artisan.png"
+  },
+  "Mercenary": {
+    "ranking": 8,
+    "xp": 13000,
+    "bonus": { "money": 100 },
+    "img": "Mercenary.png"
+  },
+  "Merchant": {
+    "ranking": 9,
+    "xp": 5000,
+    "bonus": { "money": 50 },
+    "img": "Merchant.png"
+  },
+  "Peasant": {
+    "ranking": 10,
+    "xp": 0,
+    "bonus": { "money": 25 },
+    "img": "Peasant.png"
+  }
 }

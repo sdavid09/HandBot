@@ -7,7 +7,8 @@ const rankSchema = new Schema(
     name: String,
     icon: String,
     ranking: Number,
-    bonus: { xp: Number, money: Number },
+    xp: Number,
+    bonus: { money: Number },
   },
   {
     timestamps: true,
